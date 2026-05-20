@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ESerranoEcoConnect.Models;
+using ESerranoEcoConnect.Models.ViewModels;// added to get the view models for the manage controller
 
 namespace ESerranoEcoConnect.Controllers
 {

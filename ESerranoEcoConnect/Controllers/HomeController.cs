@@ -15,14 +15,14 @@ namespace ESerranoEcoConnect.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "EcoConnect Community";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Contact us";
 
             return View();
         }
