@@ -152,7 +152,15 @@ namespace ESerranoEcoConnect.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new User
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    dateRegistered = DateTime.Now,// record the data and time when the user registered
+                    isSuspended = false // set the default value for isSuspended to false when a new user registered
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
