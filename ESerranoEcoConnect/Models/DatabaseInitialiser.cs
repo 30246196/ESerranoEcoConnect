@@ -99,6 +99,7 @@ namespace ESerranoEcoConnect.Models
                     dateRegistered = DateTime.Now,
                     isSuspended = false,
                     StaffRole = StaffRole.Admin
+                    
                 };
 
                 //add admin to the Users table in the database

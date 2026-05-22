@@ -159,21 +159,23 @@ namespace ESerranoEcoConnect.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     dateRegistered = DateTime.Now,// record the data and time when the user registered
-                    isSuspended = false // set the default value for isSuspended to false when a new user registered
+                    isSuspended = false, // set the default value for isSuspended to false when a new user registered
+                    MemberType=MemberType.Individual // set the default value for MemberType to Individual when a new user registered, you can modify this logic to allow users to choose their member type during registration if needed
                 };
+
+                // Create the user in the database
                 var result = await UserManager.CreateAsync(user, model.Password);
+
+                // Only if creation succeeded, assign the role
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    await UserManager.AddToRoleAsync(user.Id, "Member");
+
+                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);                                     
 
                     return RedirectToAction("Index", "Home");
                 }
+
                 AddErrors(result);
             }
 
