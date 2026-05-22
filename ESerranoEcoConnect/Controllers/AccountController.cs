@@ -152,7 +152,7 @@ namespace ESerranoEcoConnect.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User
+                var user = new Member// changed from User to Member to match the class name in your project structure
                 {
                     UserName = model.Email,
                     Email = model.Email,
@@ -376,7 +376,7 @@ namespace ESerranoEcoConnect.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new Member{ UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

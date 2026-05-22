@@ -14,7 +14,7 @@ using System.ComponentModel.DataAnnotations;//added for the .Where() method
 namespace ESerranoEcoConnect.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
-    public class User : IdentityUser
+    public abstract class User : IdentityUser // Stage 2. Task2.3. add Abstract User class that inherits from IdentityUser, and then have Member and Staff inherit from User. This way we can have common properties for both types of users in the User class, and specific properties for each type of user in the Member and Staff classes.
     {
         // Stage 2.2 and 2.4: Extending the IdentityUser class with additional properties
         [Display(Name = "First Name")]
