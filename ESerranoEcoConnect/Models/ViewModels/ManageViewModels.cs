@@ -2,9 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
-using ESerranoEcoConnect.Models;
 
-namespace ESerranoEcoConnect.Models.ViewModels
+namespace ESerranoEcoConnect.Models
 {
     public class IndexViewModel
     {

@@ -22,7 +22,7 @@ namespace ESerranoEcoConnect.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        public bool isSuspended{ get; set; }
+        public bool isSuspended { get; set; }
         public DateTime dateRegistered { get; set; }
         public IdentityUserRole role { get; set; }
 
@@ -46,11 +46,11 @@ namespace ESerranoEcoConnect.Models
         public string CurrentRole
         {
             get
-            {              
+            {
                 if (userManager == null)
                 {
                     userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                    
+
                 }
 
                 return userManager.GetRoles(Id).Single(); // Assuming a user has only one role, otherwise you might want to return a list of roles

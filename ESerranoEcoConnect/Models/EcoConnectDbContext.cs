@@ -8,7 +8,7 @@ using System.Data.Entity;// added for the Database.SetInitializer() method
 
 namespace ESerranoEcoConnect.Models
 {
-    public class EcoConnectDbContext :IdentityDbContext<User>
+    public class EcoConnectDbContext : IdentityDbContext<User>
     {
         public EcoConnectDbContext()
             : base("EcoConnectConnection", throwIfV1Schema: false)//changed first in <connectionStrings>... name=Defaultconnection to name= EcoConnectConnection in Web.config

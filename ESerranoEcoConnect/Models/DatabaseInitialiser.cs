@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity;//added for the UserManager class
 
 namespace ESerranoEcoConnect.Models
 {
-    internal class DatabaseInitialiser : DropCreateDatabaseAlways<EcoConnectDbContext>
+    internal class DatabaseInitialiser : DropCreateDatabaseIfModelChanges<EcoConnectDbContext>
     {
         protected override void Seed(EcoConnectDbContext context)
         {
@@ -99,7 +99,7 @@ namespace ESerranoEcoConnect.Models
                     dateRegistered = DateTime.Now,
                     isSuspended = false,
                     StaffRole = StaffRole.Admin
-                    
+
                 };
 
                 //add admin to the Users table in the database
