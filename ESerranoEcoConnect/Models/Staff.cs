@@ -10,10 +10,10 @@ using System.Web;//added for HttpPostedFileBase
 
 namespace ESerranoEcoConnect.Models
 {
-    public class Staff:User
+    public class Staff : User
     {
-            [Display(Name = "Staff Role")]
-            public StaffRole StaffRole { get; set; }
+        [Display(Name = "Staff Role")]
+        public StaffRole StaffRole { get; set; }
     }
 
     public enum StaffRole // should be IdentityRole?
@@ -22,5 +22,5 @@ namespace ESerranoEcoConnect.Models
         Admin,
         [Display(Name = "Moderator")]
         Moderator
-        }
     }
+}

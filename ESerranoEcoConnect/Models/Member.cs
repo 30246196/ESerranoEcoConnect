@@ -9,7 +9,7 @@ using System.Web;//added for HttpPostedFileBase
 
 namespace ESerranoEcoConnect.Models
 {
-    public class Member:User
+    public class Member : User
     {
         [Display(Name = "Member Type")]
         public MemberType MemberType { get; set; }

@@ -23,7 +23,7 @@ namespace ESerranoEcoConnect.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -35,9 +35,9 @@ namespace ESerranoEcoConnect.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -71,6 +71,14 @@ namespace ESerranoEcoConnect.Controllers
         {
             if (!ModelState.IsValid)
             {
+                return View(model);
+            }
+
+            // Check if the user is suspended
+            var user = await UserManager.FindByNameAsync(model.Email);
+            if (user != null && user.isSuspended)
+            {
+                ModelState.AddModelError("", "Your account is suspended.Please, contact support");
                 return View(model);
             }
 
@@ -121,7 +129,7 @@ namespace ESerranoEcoConnect.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -160,7 +168,7 @@ namespace ESerranoEcoConnect.Controllers
                     LastName = model.LastName,
                     dateRegistered = DateTime.Now,// record the data and time when the user registered
                     isSuspended = false, // set the default value for isSuspended to false when a new user registered
-                    MemberType=MemberType.Individual // set the default value for MemberType to Individual when a new user registered, you can modify this logic to allow users to choose their member type during registration if needed
+                    MemberType = MemberType.Individual // set the default value for MemberType to Individual when a new user registered, you can modify this logic to allow users to choose their member type during registration if needed
                 };
 
                 // Create the user in the database
@@ -171,7 +179,7 @@ namespace ESerranoEcoConnect.Controllers
                 {
                     await UserManager.AddToRoleAsync(user.Id, "Member");
 
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);                                     
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -378,7 +386,7 @@ namespace ESerranoEcoConnect.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new Member{ UserName = model.Email, Email = model.Email };
+                var user = new Member { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
