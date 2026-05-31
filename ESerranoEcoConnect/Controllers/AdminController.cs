@@ -22,10 +22,10 @@ namespace ESerranoEcoConnect.Controllers
     // to get access to all the methods of AcountController, such as Register, Login, 
     public class AdminController : AccountController // controler inherits from AccountController
     {
-       
+
         //Stage 3 Task 1: Create Admin Dashboard View
         // constructor that calls the base constructor of AccountController
-        public AdminController():base()
+        public AdminController() : base()
         {
 
         }
@@ -44,7 +44,7 @@ namespace ESerranoEcoConnect.Controllers
         // GET: Admin
 
         // Stage 3 Task 2.3: Admin can view users. Update Index action to retrieve the list of users from the database and display them in the view.
-       
+
         public ActionResult Index()
         {
             // get all users from the database order by registration date and pass them to the view
@@ -54,5 +54,77 @@ namespace ESerranoEcoConnect.Controllers
             // send the list users to the Index view to display the users in a table
             return View(users);
         }
+
+        //  CREATE A NEW USER BY THE ADMIN
+
+        // stage 3 Task 3.2 Create a new user,  mainly Staff or Moderator (Employee. Add a new action method in the AdminController to handle the creation of a new employee. This method should accept a CreateEmployeeViewModel as a parameter and use it to create a new user in the database with the specified role.
+        
+        [HttpGet]
+        public ActionResult CreateEmployee()
+        {          
+            CreateEmployeeViewModel newUser = new CreateEmployeeViewModel();
+
+            // get all the roles from the database and store them in a selectList Item. so, roles can be dispalyed ina dropdown list.
+            var roles = db.Roles.Select(r => new SelectListItem
+            {
+                Value = r.Name,
+                Text = r.Name
+            }).ToList();
+
+            //assign the roles to roles property of the model(employee or member)
+            newUser.Roles = roles;              
+
+            // display 
+            return View(newUser);
+                      
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateEmployee(CreateEmployeeViewModel model)
+        {
+            // check if the model state is valid before creating the user
+            if (ModelState.IsValid)
+            {
+                // create a new user with the provided information
+                var user = new Staff
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    dateRegistered = DateTime.Now
+                };
+                // create the user in the database with the specified password
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    // assign the selected role to the user
+                    await UserManager.AddToRoleAsync(user.Id, model.Role);
+                    // redirect to the admin dashboard after successful creation
+                    return RedirectToAction("Index","Admin");
+                }
+                else
+                {
+                    // if there are errors, add them to the ModelState and display them in the view
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error);
+                    }
+                }
+            }
+            // if we got this far, something failed, redisplay form with errors
+            // get all the roles from the database and store them in a selectList Item. so, roles can be dispalyed ina dropdown list.
+            var roles = db.Roles.Select(r => new SelectListItem
+            {
+                Value = r.Name,
+                Text = r.Name
+            }).ToList();
+            //assign the roles to roles property of the model(staff, moderator, admin or member)
+            model.Roles = roles;
+            return View(model);
+
+        }
+
     }
 }

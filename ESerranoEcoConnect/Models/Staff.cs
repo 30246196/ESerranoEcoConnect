@@ -21,6 +21,8 @@ namespace ESerranoEcoConnect.Models
         [Display(Name = "Admin")]
         Admin,
         [Display(Name = "Moderator")]
-        Moderator
+        Moderator,
+        [Display(Name = "Staff")]// added 
+        Staff
     }
 }
