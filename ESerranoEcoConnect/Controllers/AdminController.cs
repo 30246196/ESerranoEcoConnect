@@ -252,8 +252,41 @@ namespace ESerranoEcoConnect.Controllers
             // if we got this far, something failed, redisplay form with errors
             return View(model);
 
+        }
+        //************************************************
+        // DETAILS OF A USER BY ADMIN
+        //************************************************
+        // Stage 3 task 5. Admin can view details of a user.
+        // Add a Details action method in the AdminController to allow the admin to view the details of a specific user.
+        // This method should accept the user ID as a parameter, retrieve the user from the database, and display their details in a view.
+        [HttpGet]
+        public ActionResult Details(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var user = db.Users.Find(id);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (user is Staff)
+            {
+                return View("DetailsStaff", (Staff)user);
+            }
+
+            else if (user is Member)
+            {
+                return View("DetailsMember", (Member)user);
+            }
 
 
+            // send the user details to the view to display them
+            return View(user);
 
         }
     }
