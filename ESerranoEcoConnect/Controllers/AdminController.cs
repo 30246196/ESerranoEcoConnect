@@ -420,5 +420,39 @@ namespace ESerranoEcoConnect.Controllers
             // if we got this far, something failed, redisplay form with errors
             return View(model);
         }
+
+        //************************************************
+        // DELETE USER ACCOUNT BY THE ADMIN
+        //************************************************
+        // Stage3. Task 8 Admin can delete user accounts.
+        // Add a Delete action method in the AdminController to allow the admin to delete user accounts. This method should accept the user ID as a parameter, delete the user from the database, and redirect the admin back to the dashboard.
+
+        //GET: Users/Delete/5
+        public async Task<ActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            // cannot delete your own account
+            if (id == User.Identity.GetUserId())
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+
+            //find the user id in the db and pass it to the view to display the user details before confirming the deletion
+            var user = await UserManager.FindByIdAsync(id);
+
+            //if the user is not found, return a 404 error
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            //Delete user
+            await UserManager.DeleteAsync(user);
+
+            return RedirectToAction("Index", "Admin");
+        }
     }
 }
