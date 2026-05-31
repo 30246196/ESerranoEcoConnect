@@ -54,14 +54,14 @@ namespace ESerranoEcoConnect.Controllers
             // send the list users to the Index view to display the users in a table
             return View(users);
         }
-
+        // ********************************************
         //  CREATE A NEW USER BY THE ADMIN
 
         // stage 3 Task 3.2 Create a new user,  mainly Staff or Moderator (Employee. Add a new action method in the AdminController to handle the creation of a new employee. This method should accept a CreateEmployeeViewModel as a parameter and use it to create a new user in the database with the specified role.
-        
+
         [HttpGet]
         public ActionResult CreateEmployee()
-        {          
+        {
             CreateEmployeeViewModel newUser = new CreateEmployeeViewModel();
 
             // get all the roles from the database and store them in a selectList Item. so, roles can be dispalyed ina dropdown list.
@@ -72,11 +72,11 @@ namespace ESerranoEcoConnect.Controllers
             }).ToList();
 
             //assign the roles to roles property of the model(employee or member)
-            newUser.Roles = roles;              
+            newUser.Roles = roles;
 
             // display 
             return View(newUser);
-                      
+
         }
 
         [HttpPost]
@@ -102,7 +102,7 @@ namespace ESerranoEcoConnect.Controllers
                     // assign the selected role to the user
                     await UserManager.AddToRoleAsync(user.Id, model.Role);
                     // redirect to the admin dashboard after successful creation
-                    return RedirectToAction("Index","Admin");
+                    return RedirectToAction("Index", "Admin");
                 }
                 else
                 {
@@ -126,5 +126,135 @@ namespace ESerranoEcoConnect.Controllers
 
         }
 
+        //************************************************
+        // EDIT STAFF BY ADMIN
+
+        // Stage 3 task 4. Admin can edit staff and memebers details. Add an Edit action method in the AdminController to allow the admin to edit the details of staff and members. This method should accept the user ID as a parameter, retrieve the user from the database, and display their details in a view for editing.
+        [HttpGet]
+        public ActionResult EditStaff(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            //find the staff in the databbase by the id and pass it to the view
+            var staff = db.Users.OfType<Staff>().FirstOrDefault(s => s.Id == id);
+            if (staff == null)
+            {
+                return HttpNotFound();
+            }
+
+            //send the staff details to the view to display them in a form for editing
+            return View(new EditStaffViewModel
+            {
+                // Id = staff.Id,
+                FirstName = staff.FirstName,
+                LastName = staff.LastName,
+                Email = staff.Email,
+                isSuspended = staff.isSuspended,
+                Role = db.Roles.Where(r => r.Users.Any(u => u.UserId == staff.Id)).Select(r => r.Name).FirstOrDefault()
+            });
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditStaff(string id, [Bind(Include = "FirstName,LastName,Email,isSuspended,Role")] EditStaffViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // find the staff in the database by the id
+                var staff = db.Users.OfType<Staff>().FirstOrDefault(s => s.Id == model.Id);
+                if (staff == null)
+                {
+                    return HttpNotFound();
+                }
+                // update the staff details with the provided information
+                staff.FirstName = model.FirstName;
+                staff.LastName = model.LastName;
+                staff.Email = model.Email;
+                staff.isSuspended = model.isSuspended;
+                // update the user's role if it has changed
+                var currentRole = db.Roles.Where(r => r.Users.Any(u => u.UserId == staff.Id)).Select(r => r.Name).FirstOrDefault();
+                if (currentRole != model.Role)
+                {
+                    await UserManager.RemoveFromRoleAsync(staff.Id, currentRole);
+                    await UserManager.AddToRoleAsync(staff.Id, model.Role);
+                }
+                // save the changes to the database
+                db.Entry(staff).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                // redirect to the admin dashboard after successful update
+                return RedirectToAction("Index", "Admin");
+            }
+            // if we got this far, something failed, redisplay form with errors
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult EditMember(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Member member = db.Users.OfType<Member>().FirstOrDefault(m => m.Id == id);
+            if (member == null)
+            {
+                return HttpNotFound();
+            }
+
+            //send memeber's details to the view to display them in a form for editing
+
+            return View(new EditMemberViewModel
+            {
+                FirstName = member.FirstName,
+                LastName = member.LastName,
+                Email = member.Email,
+                isSuspended = member.isSuspended,
+                Role = db.Roles.Where(r => r.Users.Any(u => u.UserId == member.Id)).Select(r => r.Name).FirstOrDefault(),
+
+            });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditMember(string id, [Bind(Include = "FirstName,LastName,Email,isSuspended,Role")] EditMemberViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // find the member in the database by the id
+                var member = db.Users.OfType<Member>().FirstOrDefault(m => m.Id == id);
+                if (member == null)
+                {
+                    return HttpNotFound();
+                }
+                // update the member details with the provided information
+                member.FirstName = model.FirstName;
+                member.LastName = model.LastName;
+                member.Email = model.Email;
+                member.isSuspended = model.isSuspended;
+                // update the user's role if it has changed
+                var currentRole = db.Roles.Where(r => r.Users.Any(u => u.UserId == member.Id)).Select(r => r.Name).FirstOrDefault();
+                if (currentRole != model.Role)
+                {
+                    await UserManager.RemoveFromRoleAsync(member.Id, currentRole);
+                    await UserManager.AddToRoleAsync(member.Id, model.Role);
+                }
+                // save the changes to the database
+                db.Entry(member).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                // redirect to the admin dashboard after successful update
+                return RedirectToAction("Index", "Admin");
+            }
+            // if we got this far, something failed, redisplay form with errors
+            return View(model);
+
+
+
+
+        }
     }
 }
