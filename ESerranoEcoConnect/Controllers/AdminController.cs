@@ -289,5 +289,40 @@ namespace ESerranoEcoConnect.Controllers
             return View(user);
 
         }
+
+        // ************************************************
+        // CREATE A NEW ROLE BY THE ADMIN
+        //************************************************
+        // Stage 3 Task 6. Admin can create new roles.
+        // Add a CreateRole action method in the AdminController to allow the admin to create new roles.
+        // This method should accept a role name as a parameter, create a new role in the database, and redirect the admin back to the dashboard.
+
+        [HttpGet]
+        public ActionResult CreateRole()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateRole(RoleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //get the role manager to manage the roles in the database
+                RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+
+                //making sure that there are no duplicates roles stored in the database
+                if (roleManager.RoleExists(model.RoleName))
+                {
+                    //create and save the new role in the database
+                    roleManager.Create(new IdentityRole(model.RoleName));
+
+                    return RedirectToAction("Index", "Admin");
+                }
+
+            }
+            // if we got this far, something failed, redisplay form with errors
+            return View(model);
+        }
     }
 }
