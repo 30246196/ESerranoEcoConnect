@@ -324,5 +324,101 @@ namespace ESerranoEcoConnect.Controllers
             // if we got this far, something failed, redisplay form with errors
             return View(model);
         }
+
+        //************************************************
+        // CHAGE USER'S ROLE BY THE ADMIN
+        //************************************************
+        // Stage 3 Task 7. Admin can change a user's role.
+        // Add a ChangeRole action method in the AdminController to allow the admin to change the role of a user.
+        // This method should accept the user ID and the new role as parameters, update the user's role in the database, and redirect the admin back to the dashboard.
+
+        // GEt method to display the form for changing the user's role
+        [HttpGet]
+        public async Task<ActionResult> ChangeRole(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // cannot change your own role
+            if (id == User.Identity.GetUserId())
+            {
+                return RedirectToAction("Index", "Admin"); 
+            }
+
+            //get user id
+            User user = await UserManager.FindByIdAsync(id);
+
+            // get the current role of the user
+            string oldRole = (await UserManager.GetRolesAsync(id)).Single();
+
+
+            // get all the roles from the database and store them in a selectList Item. so, roles can be dispalyed ina dropdown list.
+            var items = db.Roles.Select(r => new SelectListItem
+            {
+                Value = r.Name,
+                Text = r.Name,
+                Selected = r.Name == oldRole
+            }).ToList();
+
+            //build the ChangeRoleViewModel to pass it to the view
+            return View(new ChangeRoleViewModel
+            {
+                Username=user.UserName,
+                OldRole = oldRole,
+                Roles = items
+            });           
+           
+        }
+
+        // POST method to handle the form submission for changing the user's role
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("ChangeRole")]
+        public async Task<ActionResult> ChangeRoleConfirmed(string id, [Bind(Include="Role")]ChangeRoleViewModel model)
+        {
+            // cannot change your own role
+            if (id == User.Identity.GetUserId())
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+
+            if (ModelState.IsValid)
+            {
+                //get the user id
+                User user = await UserManager.FindByIdAsync(id);// get user id
+
+                //get user's current role
+                string oldRole = (await UserManager.GetRolesAsync(id)).Single();
+
+                //if current role is the same as the new role, redirect to the admin dashboard without making any changes
+                if (oldRole == model.Role)
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+
+                //remove user from the old role and add them to the new role
+                await UserManager.RemoveFromRoleAsync(user.Id, oldRole);
+
+                //now add the user to the new role
+                await UserManager.AddToRoleAsync(user.Id, model.Role);
+
+                //if the user was suspended then issuspended the user and save the changes to the database
+
+                if (user.isSuspended)
+                {
+                    user.isSuspended = true;
+
+                    // save the changes to the database
+                    await UserManager.UpdateAsync(user);
+                }
+                return RedirectToAction("Index", "Admin");
+
+            }
+
+            // if we got this far, something failed, redisplay form with errors
+            return View(model);
+        }
     }
 }
