@@ -19,52 +19,71 @@ namespace ESerranoEcoConnect.Models
 
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));// before the if to avoid error of creating multiple role managers if there are multiple users
 
+            // added at Stage 3 Task 2 when a isSuspended role is detected and gives an error to Admin dashboard list because there are 2 roles in a ussser.
             //if there are no records stored in the Users table
             if (!context.Users.Any())
             {
-                //create some roles:Admin, Staff, manager, Member and IsSuspended and store them in the database in the Roles table
 
-                //create a new role manager object
-                //RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-
-                //If Admin role does not exist
-                //create the Admin role and store it in the database
-                if (!roleManager.RoleExists("Admin"))
+                // Ensure only these four roles exist
+                var requiredRoles = new[] { "Admin", "Member", "Staff", "Moderator" };
+                foreach (var r in requiredRoles)
                 {
-                    roleManager.Create(new IdentityRole("Admin"));
+                    if (!roleManager.RoleExists(r))
+                    {
+                        roleManager.Create(new IdentityRole(r));
+                    }
                 }
 
-                //If Staff role does not exist
-                //create the Staff role and store it in the database
-                if (!roleManager.RoleExists("Staff"))
-                {
-                    roleManager.Create(new IdentityRole("Staff"));
-                }
-
-                //If Manager role does not exist
-                //create the Manager role and store it in the database
-                if (!roleManager.RoleExists("Manager"))
-                {
-                    roleManager.Create(new IdentityRole("Manager"));
-                }
-
-                //If Member role does not exist
-                //create the Member role and store it in the database
-                if (!roleManager.RoleExists("Member"))
-                {
-                    roleManager.Create(new IdentityRole("Member"));
-                }
-
-                //create a new role for membes that are suspended and not allowed to log in to the system or comment
-                if (!roleManager.RoleExists("IsSuspended"))
-                {
-                    roleManager.Create(new IdentityRole("IsSuspended"));
-                }
-
-                // save the roles in the data base
                 context.SaveChanges();
 
             }
+
+            ////if there are no records stored in the Users table
+            //if (!context.Users.Any())
+            //{
+            //    //create some roles:Admin, Staff, manager, Member and IsSuspended and store them in the database in the Roles table
+
+            //    //create a new role manager object
+            //    //RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+
+            //    //If Admin role does not exist
+            //    //create the Admin role and store it in the database
+            //    if (!roleManager.RoleExists("Admin"))
+            //    {
+            //        roleManager.Create(new IdentityRole("Admin"));
+            //    }
+
+            //    //If Staff role does not exist
+            //    //create the Staff role and store it in the database
+            //    if (!roleManager.RoleExists("Staff"))
+            //    {
+            //        roleManager.Create(new IdentityRole("Staff"));
+            //    }
+
+            //    //If Manager role does not exist
+            //    //create the Manager role and store it in the database
+            //    if (!roleManager.RoleExists("Moderator"))
+            //    {
+            //        roleManager.Create(new IdentityRole("Moderator"));
+            //    }
+
+            //    //If Member role does not exist
+            //    //create the Member role and store it in the database
+            //    if (!roleManager.RoleExists("Member"))
+            //    {
+            //        roleManager.Create(new IdentityRole("Member"));
+            //    }
+
+            //    ////create a new role for members that are suspended and not allowed to log in to the system or comment
+            //    //if (!roleManager.RoleExists("IsSuspended"))
+            //    //{
+            //    //    roleManager.Create(new IdentityRole("IsSuspended"));
+            //    //}
+
+            //    // save the roles in the data base
+            //    context.SaveChanges();
+
+            //}
 
             // ======= Create Users ====================================
 
@@ -108,10 +127,10 @@ namespace ESerranoEcoConnect.Models
                 userManager.AddToRole(admin.Id, "Admin");// save the admin user in the database
             }
 
-            // ======= Create MANAGER user ====================================
+            // ======= Create MODERATOR user ====================================
 
-            // check if the manager exists
-            if (userManager.FindByName("manager@ecoconnect.com") == null)
+            // check if the moderator exists
+            if (userManager.FindByName("moderator@ecoconnect.com") == null)
             {
                 // relax password rules for seeding
                 userManager.PasswordValidator = new PasswordValidator
@@ -123,24 +142,24 @@ namespace ESerranoEcoConnect.Models
                     RequireUppercase = false,
                 };
 
-                // create the manager user
-                var manager = new Staff
+                // create the moderator user
+                var moderator = new Staff
                 {
-                    UserName = "manager@ecoconnect.com",
-                    Email = "manager@ecoconnect.com",
-                    FirstName = "System",
-                    LastName = "Manager",
+                    UserName = "moderator@ecoconnect.com",
+                    Email = "moderator@ecoconnect.com",
+                    FirstName = "Post",
+                    LastName = "Moderator",
                     dateRegistered = DateTime.Now,
                     isSuspended = false
                 };
 
                 // create user in DB
-                var result = userManager.Create(manager, "manager");
+                var result = userManager.Create(moderator, "moderator");
 
-                // assign Manager role
+                // assign Moderator role
                 if (result.Succeeded)
                 {
-                    userManager.AddToRole(manager.Id, "Manager");
+                    userManager.AddToRole(moderator.Id, "Moderator");
                 }
             }
 
@@ -204,7 +223,7 @@ namespace ESerranoEcoConnect.Models
                     isSuspended = false
                 };
 
-                var result1 = userManager.Create(member1, "member1");
+                var result1 = userManager.Create(member1, "member1");//user Name and password
 
                 if (result1.Succeeded)
                 {
@@ -242,7 +261,7 @@ namespace ESerranoEcoConnect.Models
                 }
             }
 
-            // ======= Create SUSPENDED MEMBER user ====================================
+            // ======= Create a  MEMBER user that is suspended ====================================
 
             if (userManager.FindByName("suspended@ecoconnect.com") == null)
             {
@@ -263,10 +282,10 @@ namespace ESerranoEcoConnect.Models
                     FirstName = "Suspended",
                     LastName = "Member",
                     dateRegistered = DateTime.Now,
-                    isSuspended = true // 🔥 key part
+                    isSuspended = true //  key part
                 };
 
-                var result = userManager.Create(suspendedMember, "suspended");
+                var result = userManager.Create(suspendedMember, "suspended");//PASSWORD
 
                 if (result.Succeeded)
                 {

@@ -11,6 +11,8 @@ using System.Linq;
 using System;
 using System.ComponentModel.DataAnnotations;//added for the .Where() method
 
+using Microsoft.Owin;//added for IOwinContext
+
 namespace ESerranoEcoConnect.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
@@ -21,9 +23,17 @@ namespace ESerranoEcoConnect.Models
         public string FirstName { get; set; }
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+        // end of stage 2.2 and 2.4
 
+        [Display(Name = "Suspended")]//added
         public bool isSuspended { get; set; }
+
+        //stage 3 Task 2.13 modify view  with selected fields.
+        [Display(Name = "Joined")]//added
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]//added
         public DateTime dateRegistered { get; set; }
+
+        [Display(Name = "Role")]//added
         public IdentityUserRole role { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
