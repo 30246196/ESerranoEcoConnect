@@ -14,6 +14,12 @@ namespace ESerranoEcoConnect.Models
     {
         [Display(Name = "Staff Role")]
         public StaffRole StaffRole { get; set; }
+
+        //NAVIGATION PROPERTIES
+        // A staff member can have many posts, but a post can only have one staff member
+        //ONE TO MANY RELATIONSHIP
+
+        public List<Post> Posts { get; set; }
     }
 
     public enum StaffRole // should be IdentityRole?
@@ -25,4 +31,5 @@ namespace ESerranoEcoConnect.Models
         [Display(Name = "Staff")]// added 
         Staff
     }
+    
 }
