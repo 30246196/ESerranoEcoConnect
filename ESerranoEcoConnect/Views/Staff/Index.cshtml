@@ -1,0 +1,107 @@
+﻿
+
+@model IEnumerable<ESerranoEcoConnect.Models.Post>
+
+@{
+    ViewBag.Title = "My Posts";
+}
+
+<h2>My Posts</h2>
+
+<p>
+    <!-- @Html.ActionLink("Create New Post", "Create", "Post", null, new { @class = "btn btn-primary" }) -->
+    @Html.ActionLink("Create New Post", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Created</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.Category.CategoryName</td>
+            <td>@item.CreatedAt.ToShortDateString()</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Post", new { id = item.PostId }, null) |
+                @Html.ActionLink("Delete", "Delete", "Post", new { id = item.PostId }, null)
+            </td>
+        </tr>
+    }
+</table>
+
+<!--
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Staff.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdatedAt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsAnnouncement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsEventUpdate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Staff.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsAnnouncement)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsEventUpdate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.PostId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.PostId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.PostId })
+            </td>
+        </tr>
+    }
+
+</table>
+-->
