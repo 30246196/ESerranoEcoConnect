@@ -19,10 +19,11 @@ namespace ESerranoEcoConnect.Models
         // A staff member can have many posts, but a post can only have one staff member
         //ONE TO MANY RELATIONSHIP
 
-        public List<Post> Posts { get; set; }
+        //public List<Post> Posts { get; set; }
+        public virtual ICollection<Post> Posts {get; set;}
     }
 
-    public enum StaffRole // should be IdentityRole?
+    public enum StaffRole 
     {
         [Display(Name = "Admin")]
         Admin,

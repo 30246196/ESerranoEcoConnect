@@ -1,0 +1,63 @@
+﻿@model ESerranoEcoConnect.Models.User
+
+@{
+    ViewBag.Title = "Delete User";
+}
+
+<h2>Delete User</h2>
+
+<div class="alert alert-danger">
+    <strong>Warning:</strong> You are about to permanently delete this user.
+</div>
+
+<table class="table table-bordered">
+    <tr>
+        <th>First Name</th>
+        <td>@Model.FirstName</td>
+    </tr>
+    <tr>
+        <th>Last Name</th>
+        <td>@Model.LastName</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>@Model.Email</td>
+    </tr>
+    <tr>
+        <th>Role</th>
+        <td>@Model.CurrentRole</td>
+    </tr>
+    <tr>
+        <th>Suspended</th>
+        <td>@Model.IsSuspended</td>
+    </tr>
+
+    @if (Model is ESerranoEcoConnect.Models.Member)
+    {
+        <tr>
+            <th>Comments Written</th>
+            <td>@(Model as ESerranoEcoConnect.Models.Member).Comments.Count()</td>
+        </tr>
+    }
+
+    @if (Model is ESerranoEcoConnect.Models.Staff)
+    {
+        <tr>
+            <th>Posts Created</th>
+            <td>@(Model as ESerranoEcoConnect.Models.Staff).Posts.Count()</td>
+        </tr>
+    }
+</table>
+
+@using (Html.BeginForm("Delete", "Admin", new { id = Model.Id }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <button type="submit" class="btn btn-danger">
+        Delete User
+    </button>
+
+    <a href="@Url.Action("Index", "Admin")" class="btn btn-default">
+        Cancel
+    </a>
+}

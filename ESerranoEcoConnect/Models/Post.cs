@@ -26,20 +26,20 @@ namespace ESerranoEcoConnect.Models
         [Required]
         public string StaffId { get; set; }
         public Staff Staff { get; set; }
+        
+        public bool IsAnnouncement { get; set; }
+       
+        public bool IsEventUpdate { get; set; }
 
-        [Required]
-        public bool isAnnouncement { get; set; }
-
-        [Required]
-        public bool isEventUpdate { get; set; }
-
-        // NAVIGATION PROPERTIES
+         
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
         public  Category Category { get; set; }
 
-        //[ForeignKey("Staff")]
-        //public string Id { get; set; }
-        //public  Staff Staff { get; set; }
+        // NAVIGATION PROPERTIES 
+        // A post can have many comments, but a comment can only belong to one post
+        public virtual ICollection<Comment> Comments { get; set; }
+
+
     }
 }

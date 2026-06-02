@@ -176,6 +176,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\DatabaseInitialiser.cs" />
     <Compile Include="Models\EcoConnectDbContext.cs" />
     <Compile Include="Models\Member.cs" />
@@ -271,6 +272,7 @@
     <Content Include="Views\Admin\DetailsMember.cshtml" />
     <Content Include="Views\Admin\CreateRole.cshtml" />
     <Content Include="Views\Admin\ChangeRole.cshtml" />
+    <Content Include="Views\Admin\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

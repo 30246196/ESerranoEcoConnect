@@ -76,7 +76,7 @@ namespace ESerranoEcoConnect.Controllers
 
             // Check if the user is suspended
             var user = await UserManager.FindByNameAsync(model.Email);
-            if (user != null && user.isSuspended)
+            if (user != null && user.IsSuspended)
             {
                 ModelState.AddModelError("", "Your account is suspended.Please, contact support");
                 return View(model);
@@ -166,15 +166,15 @@ namespace ESerranoEcoConnect.Controllers
                     Email = model.Email,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    dateRegistered = DateTime.Now,// record the data and time when the user registered
-                    isSuspended = false, // set the default value for isSuspended to false when a new user registered
-                    MemberType = MemberType.Individual // set the default value for MemberType to Individual when a new user registered, you can modify this logic to allow users to choose their member type during registration if needed
+                    DateRegistered = DateTime.Now,// record the data and time when the user registered
+                    IsSuspended = false, // set the default value for IsSuspended to false when a new user registered
+                    //MemberType = MemberType.Individual // set the default value for MemberType to Individual when a new user registered, you can modify this logic to allow users to choose their member type during registration if needed
                 };
 
                 // Create the user in the database
                 var result = await UserManager.CreateAsync(user, model.Password);
 
-                // Only if creation succeeded, assign the role
+                // Only if creation succeeded, assign the Role
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user.Id, "Member");

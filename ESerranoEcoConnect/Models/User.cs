@@ -26,15 +26,15 @@ namespace ESerranoEcoConnect.Models
         // end of stage 2.2 and 2.4
 
         [Display(Name = "Suspended")]//added
-        public bool isSuspended { get; set; }
+        public bool IsSuspended { get; set; }
 
         //stage 3 Task 2.13 modify view  with selected fields.
         [Display(Name = "Joined")]//added
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]//added
-        public DateTime dateRegistered { get; set; }
+        public DateTime DateRegistered { get; set; }
 
         [Display(Name = "Role")]//added
-        public IdentityUserRole role { get; set; }
+        public IdentityUserRole Role { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
@@ -44,13 +44,13 @@ namespace ESerranoEcoConnect.Models
             return userIdentity;
         }
 
-        //TODO: Add a method to get the user's role as a string
+        //TODO: Add a method to get the user's Role as a string
 
-        // NEED the ApplicationUserManager to get the usr's current role, but can't inject it into the User class, so we have to get it from the OwinContext
+        // NEED the ApplicationUserManager to get the usr's current Role, but can't inject it into the User class, so we have to get it from the OwinContext
         private ApplicationUserManager userManager;
 
         // the currentRole property is not mapped as a field in the user's table
-        // I need it to get the current role that the user is logged in with, so I can display it in the profile page and use it for authorization checks in the views
+        // I need it to get the current Role that the user is logged in with, so I can display it in the profile page and use it for authorization checks in the views
 
         [NotMapped]// This property is not mapped to the database, it's just for convenience
         public string CurrentRole
@@ -63,7 +63,7 @@ namespace ESerranoEcoConnect.Models
 
                 }
 
-                return userManager.GetRoles(Id).Single(); // Assuming a user has only one role, otherwise you might want to return a list of roles
+                return userManager.GetRoles(Id).Single(); // Assuming a user has only one Role, otherwise you might want to return a list of roles
             }
         }
     }

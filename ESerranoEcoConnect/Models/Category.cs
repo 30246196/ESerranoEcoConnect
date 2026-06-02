@@ -11,10 +11,12 @@ namespace ESerranoEcoConnect.Models
         [Key]
         public int CategoryId { get; set; }
 
+        [Required]
         [Display(Name = "Category")]
         public string CategoryName { get; set; }
 
         // NAVIGATION PROPERTIES
-        public List<Post> Posts { get; set; }
+       // public <Post> Posts { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }// in Entity Framework, virtual allows for lazy loading of related data. It creates a proxy class that overrides the navigation property and loads the related data from the database when accessed for the first time.
     }
 }

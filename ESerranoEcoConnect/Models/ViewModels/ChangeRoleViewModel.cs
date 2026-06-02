@@ -9,7 +9,7 @@ namespace ESerranoEcoConnect.Models.ViewModels
 {
     public class ChangeRoleViewModel
     {
-        //new class to the ViewModels folder named ChangeRoleViewModel, storing the users' username, old role, new role, and a list of all roles
+        //new class to the ViewModels folder named ChangeRoleViewModel, storing the users' username, old Role, new Role, and a list of all roles
         public string Username { get; set; }
         public string OldRole { get; set; }
         public string NewRole { get; set; }
