@@ -21,6 +21,8 @@
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Blogs", "GetBlogs", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+
                     @if (Request.IsAuthenticated)
                     {
                         <!-- Stage 3 Task 2.12 Add a navigation link visible only to Admin role users. -->
@@ -30,12 +32,12 @@
                         }
                         <!-- Add more user-specific links here, such as profile, my posts, etc. -->
                         <!--
-                            {
-                                < li > @Html.ActionLink("My Profile", "Profile", "Account", new { area = "" }, new { @class = "nav-link" }) </ li >
-                                < li > @Html.ActionLink("My Posts", "MyPosts", "Posts", new { area = "" }, new { @class = "nav-link" }) </ li >
-                                < li > @Html.ActionLink("Create Post", "Create", "Posts", new { area = "" }, new { @class = "nav-link" }) </ li >
-                            }
-                        -->
+            {
+                < li > @Html.ActionLink("My Profile", "Profile", "Account", new { area = "" }, new { @class = "nav-link" }) </ li >
+                < li > @Html.ActionLink("My Posts", "MyPosts", "Posts", new { area = "" }, new { @class = "nav-link" }) </ li >
+                < li > @Html.ActionLink("Create Post", "Create", "Posts", new { area = "" }, new { @class = "nav-link" }) </ li >
+            }
+        -->
                     }
                 </ul>
                  @Html.Partial("_LoginPartial")

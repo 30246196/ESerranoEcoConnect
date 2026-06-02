@@ -1,0 +1,52 @@
+﻿@model ESerranoEcoConnect.Models.Post
+
+@{
+    ViewBag.Title = "Post Details";
+}
+
+<h2>@Model.Title</h2>
+
+<hr />
+
+<dl class="dl-horizontal">
+
+    <dt>Category</dt>
+    <dd>@Model.Category.CategoryName</dd>
+
+    <dt>Author</dt>
+    <dd>@Model.Staff.FirstName @Model.Staff.LastName</dd>
+
+    <dt>Created</dt>
+    <dd>@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+
+    <dt>Content</dt>
+    <dd>@Model.Content</dd>
+
+</dl>
+
+<hr />
+
+<h3>Comments</h3>
+
+@if (Model.Comments != null && Model.Comments.Any())
+{
+    foreach (var c in Model.Comments)
+    {
+        <div style="margin-bottom:15px;">
+            <p><strong>@c.Author.FirstName @c.Author.LastName</strong></p>
+            <p>@c.Content</p>
+            <p><i>@c.CreatedAt.ToString("dd/MM/yyyy HH:mm")</i></p>
+        </div>
+        <hr />
+    }
+}
+else
+{
+    <p>No comments yet.</p>
+}
+
+<br />
+
+<p>
+    @Html.ActionLink("Back to Blogs", "GetBlogs", "Home", null, new { @class = "btn btn-default" })
+</p>
