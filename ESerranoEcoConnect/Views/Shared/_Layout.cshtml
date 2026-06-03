@@ -29,14 +29,14 @@
                         if (User.IsInRole("Admin"))
                         {
                             <li>@Html.ActionLink("Admin Dashboard", "Index", "Admin")</li>
-                        }                      
+                        }
 
                         <!--  Stage 6 Create a Staff Dashboard to deal with posts -->
                         if (User.IsInRole("Staff"))
-                         {                            
-                            <li> @Html.ActionLink("My Posts", "MyPosts", "Posts", new { area = "" }, new { @class = "nav-link" }) </li >
-                            <li> @Html.ActionLink("Create a Post", "Create", "Posts", new { area = "" }, new { @class = "nav-link" }) </li >
-                         }
+                        {
+                            <li> @Html.ActionLink("My Posts", "Index", "Staff", new { area = "" }, new { @class = "nav-link" }) </li>
+                            <li> @Html.ActionLink("Create a Post", "Create", "Staff", new { area = "" }, new { @class = "nav-link" }) </li>
+                        }
 
                         <!--
             {

@@ -10,7 +10,7 @@
 
 <p>
     <!-- @Html.ActionLink("Create New Post", "Create", "Post", null, new { @class = "btn btn-primary" }) -->
-    @Html.ActionLink("Create New Post", "Create")
+    @Html.ActionLink("Create New Post", "Create","Staff")
 </p>
 
 <table class="table">
@@ -28,8 +28,9 @@
             <td>@item.Category.CategoryName</td>
             <td>@item.CreatedAt.ToShortDateString()</td>
             <td>
-                @Html.ActionLink("Edit", "Edit", "Post", new { id = item.PostId }, null) |
-                @Html.ActionLink("Delete", "Delete", "Post", new { id = item.PostId }, null)
+                @Html.ActionLink("Edit", "Edit", "Staff", new { id = item.PostId }, null) |
+                @Html.ActionLink("Details", "Details", "Staff", new { id = item.PostId }, null) |
+                @Html.ActionLink("Delete", "Delete", "Staff", new { id = item.PostId }, null)
             </td>
         </tr>
     }
