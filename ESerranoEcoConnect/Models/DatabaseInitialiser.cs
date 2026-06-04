@@ -19,7 +19,7 @@ using Microsoft.AspNet.Identity;//added for the UserManager class
 
 namespace ESerranoEcoConnect.Models
 {
-    public class DatabaseInitialiser : DropCreateDatabaseIfModelChanges<EcoConnectDbContext>
+    public class DatabaseInitialiser : DropCreateDatabaseAlways<EcoConnectDbContext>
     {
         protected override void Seed(EcoConnectDbContext context)
         {

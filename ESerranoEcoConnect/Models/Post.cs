@@ -18,20 +18,20 @@ namespace ESerranoEcoConnect.Models
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
 
+        [Display(Name ="Date Created")]
         public DateTime CreatedAt { get; set; }
         
         public DateTime UpdatedAt { get; set; }
+        public bool IsAnnouncement { get; set; }
+
+        public bool IsEventUpdate { get; set; }
 
         //FK to Staff (author)
-        [Required]
+        [ForeignKey("Staff")]
         public string StaffId { get; set; }
         public Staff Staff { get; set; }
         
-        public bool IsAnnouncement { get; set; }
-       
-        public bool IsEventUpdate { get; set; }
-
-         
+                
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
         public  Category Category { get; set; }

@@ -20,7 +20,7 @@ namespace ESerranoEcoConnect.Models
         public DbSet<Staff> Staffs { get; set; }
 
         public EcoConnectDbContext()
-            : base("EcoConnectConnection", throwIfV1Schema: false)//changed first in <connectionStrings>... name=Defaultconnection to name= EcoConnectConnection in Web.config
+            : base("EcoConnectConnectionV2", throwIfV1Schema: false)//changed first in <connectionStrings>... name=Defaultconnection to name= EcoConnectConnection in Web.config
         {
             Database.SetInitializer(new DatabaseInitialiser());
         }

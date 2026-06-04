@@ -74,8 +74,8 @@ namespace ESerranoEcoConnect.Controllers
             post.StaffId = User.Identity.GetUserId();
 
             //remove  StaffId from validation since it is not included in the form and is assigned automatically
-            ModelState["StaffId"].Errors.Clear();
-
+            //ModelState["StaffId"].Errors.Clear();
+            ModelState.Remove("StaffId");
             if (ModelState.IsValid)
             {
                // post.StaffId = User.Identity.GetUserId();

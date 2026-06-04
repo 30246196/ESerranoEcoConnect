@@ -34,7 +34,7 @@ namespace ESerranoEcoConnect.Controllers
         public ActionResult GetBlogs()
         {
             // Get all posts, include category and staff author
-            var posts = context.Posts
+            var posts = context.Posts        
                 .Include("Category") // Use string overload for Include
                 .Include("Staff")    // Use string overload for Include
                 .OrderByDescending(p => p.CreatedAt)

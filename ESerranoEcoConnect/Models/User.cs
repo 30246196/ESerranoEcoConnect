@@ -33,19 +33,8 @@ namespace ESerranoEcoConnect.Models
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]//added
         public DateTime DateRegistered { get; set; }
 
-        [Display(Name = "Role")]//added
-        public IdentityUserRole Role { get; set; }
-
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
-        {
-            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
-            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // Add custom user claims here
-            return userIdentity;
-        }
 
         //TODO: Add a method to get the user's Role as a string
-
         // NEED the ApplicationUserManager to get the usr's current Role, but can't inject it into the User class, so we have to get it from the OwinContext
         private ApplicationUserManager userManager;
 
@@ -66,6 +55,20 @@ namespace ESerranoEcoConnect.Models
                 return userManager.GetRoles(Id).Single(); // Assuming a user has only one Role, otherwise you might want to return a list of roles
             }
         }
+
+       
+
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
+        {
+            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
+            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            // Add custom user claims here
+            return userIdentity;
+        }
+
+       
+
+      
     }
 
 

@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace ESerranoEcoConnect.Controllers
 {
@@ -223,5 +225,25 @@ namespace ESerranoEcoConnect.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        //*******************************************************************************************************
+        //                      ROLES
+        //*******************************************************************************************************
+
+        // Implement that Moderator can view all posts and delete inappropriate posts
+        [Authorize(Roles = "Moderator")]// This attribute ensures that only users with the "Moderator" role can access this action
+        public ActionResult ViewAllPosts()
+        {
+            //get all posts from the Posts table in the db and pass them to the ViewAllPosts view to display them in a table
+            List<Post> posts = db.Posts
+                .Include(p=>p.Category)
+                .Include(p=>p.Staff)
+                .ToList();
+
+            //return the ViewAllPosts view and pass the list of posts to it to display them in a table
+            return View(posts);
+        }
+
     }
 }
