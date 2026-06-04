@@ -1,0 +1,33 @@
+﻿@model IEnumerable<ESerranoEcoConnect.Models.Category>
+
+@{
+    ViewBag.Title = "ViewAllCategories";
+}
+
+<h2>View All Categories</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateCategory")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditCategory", new { id=item.CategoryId }) |
+            @Html.ActionLink("Details", "CategoryDetails", new { id=item.CategoryId }) |
+            @Html.ActionLink("Delete", "DeleteCategory", new { id=item.CategoryId })
+        </td>
+    </tr>
+}
+
+</table>

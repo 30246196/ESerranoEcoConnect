@@ -172,6 +172,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ModeratorController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -283,6 +284,12 @@
     <Content Include="Views\Staff\Create.cshtml" />
     <Content Include="Views\Staff\Delete.cshtml" />
     <Content Include="Views\Manage\EditProfile.cshtml" />
+    <Content Include="Views\Moderator\Index.cshtml" />
+    <Content Include="Views\Moderator\ViewAllCategories.cshtml" />
+    <Content Include="Views\Moderator\CategoryDetails.cshtml" />
+    <Content Include="Views\Moderator\CreateCategory.cshtml" />
+    <Content Include="Views\Moderator\EditCategory.cshtml" />
+    <Content Include="Views\Moderator\DeleteCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

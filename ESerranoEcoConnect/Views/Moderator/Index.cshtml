@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Moderator Page</h2>
+<p>Welcome to the Moderator Dashboard! Here you can review and manage user-generated content, ensuring that our community remains a positive and engaging space for all members. Use the tools provided to approve, edit, or remove posts as necessary, and help us maintain a safe and respectful environment for everyone.</p>
+
+@Html.ActionLink("View All Categories", "ViewAllCategories", "Moderator", new { @class = "btn btn-success btn-lg" })
+@Html.ActionLink("View All Users", "ViewUsers", "Moderator", new { @class = "btn btn-success btn-lg" })
+@Html.ActionLink("View All Posts", "ViewAllPosts", "Moderator", new { @class = "btn btn-success btn-lg" })
+
+

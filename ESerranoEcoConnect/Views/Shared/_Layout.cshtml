@@ -38,14 +38,22 @@
                             <li> @Html.ActionLink("Create a Post", "Create", "Staff", new { area = "" }, new { @class = "nav-link" }) </li>
                         }
 
-                        <!--
-            {
-                < li > @Html.ActionLink("My Profile", "Profile", "Account", new { area = "" }, new { @class = "nav-link" }) </ li >
+                        <!--  Stage 8: task 1: Add  the Modderator link visible only for Moderator users-->
 
-            }
-        -->
+                        if (User.IsInRole("Moderator"))
+                        {
+                            <li> @Html.ActionLink("Moderate Categories,Posts and Users", "Index", "Moderator", new { area = "" }, new { @class = "nav-link" }) </li>
+
+                        }
                     }
-                </ul>
+                            <!--
+                {
+                    < li > @Html.ActionLink("My Profile", "Profile", "Account", new { area = "" }, new { @class = "nav-link" }) </ li >
+
+                }
+            -->
+                        
+                    </ul>
                  @Html.Partial("_LoginPartial")
             </div>
         </div>

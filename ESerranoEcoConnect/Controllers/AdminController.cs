@@ -344,7 +344,7 @@ namespace ESerranoEcoConnect.Controllers
             // cannot change your own Role
             if (id == User.Identity.GetUserId())
             {
-                return RedirectToAction("Index", "Admin"); 
+                return RedirectToAction("Index", "Admin");
             }
 
             //get user id
@@ -365,18 +365,18 @@ namespace ESerranoEcoConnect.Controllers
             //build the ChangeRoleViewModel to pass it to the view
             return View(new ChangeRoleViewModel
             {
-                Username=user.UserName,
+                Username = user.UserName,
                 OldRole = oldRole,
                 Roles = items
-            });           
-           
+            });
+
         }
 
         // POST method to handle the form submission for changing the user's Role
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("ChangeRole")]
-        public async Task<ActionResult> ChangeRoleConfirmed(string id, [Bind(Include="Role")]ChangeRoleViewModel model)
+        public async Task<ActionResult> ChangeRoleConfirmed(string id, [Bind(Include = "Role")] ChangeRoleViewModel model)
         {
             // cannot change your own Role
             if (id == User.Identity.GetUserId())
@@ -470,7 +470,7 @@ namespace ESerranoEcoConnect.Controllers
             if (id == User.Identity.GetUserId())
                 return RedirectToAction("Index", "Admin");
 
-           // find the user
+            // find the user
             var user = await UserManager.FindByIdAsync(id);
 
             if (user == null)
@@ -555,5 +555,7 @@ namespace ESerranoEcoConnect.Controllers
             return RedirectToAction("Index", "Admin");
         }
 
+
+       
     }
 }
