@@ -291,6 +291,7 @@
     <Content Include="Views\Moderator\EditCategory.cshtml" />
     <Content Include="Views\Moderator\DeleteCategory.cshtml" />
     <Content Include="Views\Moderator\ViewAllPosts.cshtml" />
+    <Content Include="Views\Moderator\DeletePost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

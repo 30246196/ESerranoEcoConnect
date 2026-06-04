@@ -237,13 +237,47 @@ namespace ESerranoEcoConnect.Controllers
         {
             //get all posts from the Posts table in the db and pass them to the ViewAllPosts view to display them in a table
             List<Post> posts = db.Posts
-                .Include(p=>p.Category)
-                .Include(p=>p.Staff)
+                .Include(p => p.Category)
+                .Include(p => p.Staff)
                 .ToList();
 
             //return the ViewAllPosts view and pass the list of posts to it to display them in a table
             return View(posts);
         }
 
+        // GET: Moderator/DeletePost/5
+        [Authorize(Roles = "Moderator")]
+        public ActionResult DeletePost(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //find post by id in Posts table in the db
+            var post = db.Posts.Find(id);
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+            //send the post to the DeletePost view to confirm the deletion of the post
+            return View(post);
+        }
+
+        // POST: Moderator/DeletePost/5
+        [Authorize(Roles = "Moderator")]
+        [HttpPost, ActionName("DeletePost")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeletePostConfirmed(int id)
+        {
+            //find post by id in Posts table in the db
+            var post = db.Posts.Find(id);
+            //remove the post from the Posts table in the db
+            db.Posts.Remove(post);
+            db.SaveChanges();
+            return RedirectToAction("ViewAllPosts");
+        }
+
+        //Get: Moderator/ManageUsers
+        
     }
 }

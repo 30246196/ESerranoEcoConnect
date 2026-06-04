@@ -65,9 +65,9 @@
             @Html.DisplayFor(modelItem => item.IsEventUpdate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PostId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PostId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PostId })
+            @Html.ActionLink("Edit", "EditPost", new { id=item.PostId }) |
+            @Html.ActionLink("Details", "PostDetails", new { id=item.PostId }) |
+            @Html.ActionLink("Delete", "DeletePost", new { id=item.PostId })
         </td>
     </tr>
 }
