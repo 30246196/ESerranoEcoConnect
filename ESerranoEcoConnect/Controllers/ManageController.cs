@@ -51,6 +51,70 @@ namespace ESerranoEcoConnect.Controllers
             }
         }
 
+        //*********************************************************************
+        // Stage 7: Implement the EditProfile action methods in the ManageController
+        //*********************************************************************
+
+        // GET: /Manage/EditProfile  Load the user into the form
+        [HttpGet]
+        [Authorize]
+        public ActionResult EditProfile()
+        {
+            var userId = User.Identity.GetUserId();
+            var user = UserManager.FindById(userId);
+
+            if (user == null)
+                return HttpNotFound();
+
+            var model = new EditProfileViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email
+            };
+
+            return View(model);
+        }
+
+
+        // POST: Save changes
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProfile(EditProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userId = User.Identity.GetUserId();
+            var user = UserManager.FindById(userId);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.UserName = model.Email; // Update the username to match the new email
+
+            var result = UserManager.Update(user);
+            if (result.Succeeded)
+            {
+                TempData["Sucess"] = "Your profile has been updated.";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "An error occurred while updating your profile.");
+            }
+
+            return View(model);
+        }
+
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)

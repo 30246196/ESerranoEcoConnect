@@ -188,6 +188,7 @@
     <Compile Include="Models\ViewModels\ChangeRoleViewModel.cs" />
     <Compile Include="Models\ViewModels\CreateEmployeeViewModel.cs" />
     <Compile Include="Models\ViewModels\EditMemberViewModel.cs" />
+    <Compile Include="Models\ViewModels\EditProfileViewModel.cs" />
     <Compile Include="Models\ViewModels\EditStaffViewModel.cs" />
     <Compile Include="Models\ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\ViewModels\RoleViewModel.cs" />
@@ -281,6 +282,7 @@
     <Content Include="Views\Staff\Edit.cshtml" />
     <Content Include="Views\Staff\Create.cshtml" />
     <Content Include="Views\Staff\Delete.cshtml" />
+    <Content Include="Views\Manage\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
