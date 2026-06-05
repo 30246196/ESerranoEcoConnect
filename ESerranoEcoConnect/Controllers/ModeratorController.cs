@@ -228,7 +228,7 @@ namespace ESerranoEcoConnect.Controllers
 
 
         //*******************************************************************************************************
-        //                      ROLES
+        //                      POSTS                MODERATORS
         //*******************************************************************************************************
 
         // Implement that Moderator can view all posts and delete inappropriate posts
@@ -277,7 +277,70 @@ namespace ESerranoEcoConnect.Controllers
             return RedirectToAction("ViewAllPosts");
         }
 
-        //Get: Moderator/ManageUsers
-        
+        //added in Stage 8 Task 4. Moderator can edit posts to correct any inappropriate content instead of deleting the post
+        // GET: Moderator/EditPost/5
+        [Authorize(Roles = "Moderator")]
+        public ActionResult EditPost(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //find post by id in Posts table in the db
+            var post = db.Posts.Find(id);
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+
+            //populate dropdowns to avoid an error in the view when trying to edit the post
+            ViewBag.StaffId = new SelectList(db.Staffs.Select(s=> new
+            {
+                Id=s.Id,
+                FullName=s.FirstName + " " + s.LastName
+            }),
+            "Id",
+            "FullName",
+            post.StaffId);
+            //db.SaveChanges();
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", post.CategoryId);
+
+            //send the post to the EditPost view to edit the post
+            return View(post);
+        }
+
+        // POST: Moderator/EditPost/5
+        [Authorize(Roles = "Moderator")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditPost(Post post)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(post).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ViewAllPosts");
+            }
+
+            // added to repopulate dropdowns to avoid an error in the view when trying to edit the post if the model state is not valid
+            // Repopulate dropdowns when returning the view
+            //ViewBag.StaffId = new SelectList(db.Staffs, "StaffId", "StaffName", post.StaffId);
+            ViewBag.StaffId = new SelectList(
+                db.Staffs.Select(s => new
+                 {
+                     Id = s.Id,
+                    FullName = s.FirstName + " " + s.LastName
+                }),
+                 "Id",
+                 "FullName",
+                 post.StaffId
+            );
+
+
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", post.CategoryId);
+
+            return View(post);
+        }
+
     }
 }
