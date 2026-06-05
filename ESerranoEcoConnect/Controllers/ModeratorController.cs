@@ -294,10 +294,10 @@ namespace ESerranoEcoConnect.Controllers
             }
 
             //populate dropdowns to avoid an error in the view when trying to edit the post
-            ViewBag.StaffId = new SelectList(db.Staffs.Select(s=> new
+            ViewBag.StaffId = new SelectList(db.Staffs.Select(s => new
             {
-                Id=s.Id,
-                FullName=s.FirstName + " " + s.LastName
+                Id = s.Id,
+                FullName = s.FirstName + " " + s.LastName
             }),
             "Id",
             "FullName",
@@ -327,8 +327,8 @@ namespace ESerranoEcoConnect.Controllers
             //ViewBag.StaffId = new SelectList(db.Staffs, "StaffId", "StaffName", post.StaffId);
             ViewBag.StaffId = new SelectList(
                 db.Staffs.Select(s => new
-                 {
-                     Id = s.Id,
+                {
+                    Id = s.Id,
                     FullName = s.FirstName + " " + s.LastName
                 }),
                  "Id",
@@ -342,5 +342,22 @@ namespace ESerranoEcoConnect.Controllers
             return View(post);
         }
 
+        //*******************************************************************************************************
+        //                      USERS   BY             MODERATORS
+        //*******************************************************************************************************
+        // Implement that Moderator can view all users and delete inappropriate users
+        //sTAGE 8 TASK 4. Moderator can VIEW  registered user's details
+
+        [Authorize(Roles = "Moderator")]// This attribute ensures that only users with the "Moderator" role can access this action
+        public ActionResult ViewUsers()
+        {
+            //get all users from the Users table in the db and pass them to the ViewAllUsers view to display them in a table
+            // Include the Roles navigation property to access the roles of each user and order the users by last name
+            List<User> users = db.Users.Include(u => u.Roles).OrderBy(u => u.LastName).ToList();
+
+            //return the ViewAllUsers view and pass the list of users to it to display them in a table
+            return View(users);
+        }
+        //*********************************************************************************************************
     }
 }

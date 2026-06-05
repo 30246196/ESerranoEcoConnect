@@ -24,10 +24,13 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "EditCategory", new { id=item.CategoryId }) |
-            @Html.ActionLink("Details", "CategoryDetails", new { id=item.CategoryId }) |
+            @*@Html.ActionLink("Details", "CategoryDetails", new { id=item.CategoryId }) |*@
             @Html.ActionLink("Delete", "DeleteCategory", new { id=item.CategoryId })
         </td>
     </tr>
 }
 
 </table>
+<div>
+    @Html.ActionLink("Back to Moderator Page", "Index")
+</div>
