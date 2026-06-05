@@ -345,7 +345,7 @@ namespace ESerranoEcoConnect.Controllers
         //*******************************************************************************************************
         //                      USERS   BY             MODERATORS
         //*******************************************************************************************************
-        // Implement that Moderator can view all users and delete inappropriate users
+        // 
         //sTAGE 8 TASK 4. Moderator can VIEW  registered user's details
 
         [Authorize(Roles = "Moderator")]// This attribute ensures that only users with the "Moderator" role can access this action
@@ -359,5 +359,47 @@ namespace ESerranoEcoConnect.Controllers
             return View(users);
         }
         //*********************************************************************************************************
+        //   MODERATORS DELETE INAPPROPRIATE COMMENTS
+        //*************************************************************************************************************
+        //Stage 8 Task . Moderator can delete inappropriate comments
+        [Authorize(Roles = "Moderator")]// This attribute ensures that only users with the "Moderator" role can access this action
+        public ActionResult ViewAllComments()
+        {
+            //get all comments from the Comments table in the db and pass them to the ViewAllComments view to display them in a table
+            List<Comment> comments = db.Comments               
+                .Include(c => c.Post)
+                .Include(c => c.Author)
+                .ToList();
+            //return the ViewAllComments view and pass the list of comments to it to display them in a table
+            return View(comments);
+        }
+
+        // GET: Moderator/DeleteComment/5
+        [Authorize(Roles = "Moderator")]
+        public ActionResult DeleteComment(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Comment comment = db.Comments.Find(id);
+            if (comment == null)
+            {
+                return HttpNotFound();
+            }
+            return View(comment);
+        }
+
+        // POST: Moderator/DeleteComment/5
+        [Authorize(Roles = "Moderator")]
+        [HttpPost, ActionName("DeleteComment")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteCommentConfirmed(int id)
+        {
+            Comment comment = db.Comments.Find(id);
+            db.Comments.Remove(comment);
+            db.SaveChanges();
+            return RedirectToAction("ViewAllComments");
+        }
     }
 }
