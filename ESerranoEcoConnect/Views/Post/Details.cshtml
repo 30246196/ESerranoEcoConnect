@@ -1,9 +1,11 @@
-﻿@model ESerranoEcoConnect.Models.Post
+﻿@model ESerranoEcoConnect.Models.ViewModels.PostDetailsViewModel
+
+
 
 @{
     ViewBag.Title = "Post Details";
 }
-
+`
 <h2>@Model.Title</h2>
 
 <hr />
@@ -11,10 +13,10 @@
 <dl class="dl-horizontal">
 
     <dt>Category</dt>
-    <dd>@Model.Category.CategoryName</dd>
+    <dd>@Model.CategoryName</dd>
 
     <dt>Author</dt>
-    <dd>@Model.Staff.FirstName @Model.Staff.LastName</dd>
+    <dd>@Model.AuthorName</dd>
 
     <dt>Created</dt>
     <dd>@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
@@ -45,8 +47,27 @@ else
     <p>No comments yet.</p>
 }
 
-<br />
+
+<!-- added in stage 9 Members and Suspended members comments-->
+@if (User.Identity.IsAuthenticated)
+{
+    <h4>Add a comment</h4>
+
+    using (Html.BeginForm("CreateComment", "Comment", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.PostId)
+
+        <div class="form-group">
+            @Html.Label("Comment")
+            @Html.TextArea("NewCommentContent",null, new {@class = "form-control", rows = 4})
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Comment</button>
+    }
+}
 
 <p>
     @Html.ActionLink("Back to Blogs", "GetBlogs", "Home", null, new { @class = "btn btn-default" })
+ 
 </p>

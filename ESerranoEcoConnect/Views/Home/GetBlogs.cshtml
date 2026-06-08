@@ -7,7 +7,7 @@
 <h2>Get Blogs</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create","Staff")
 </p>
 
 <br />
@@ -86,7 +86,7 @@
             </td>
             <td>
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.PostId }) |*@
-                @Html.ActionLink("Details", "Details", new { id = item.PostId }) 
+                @Html.ActionLink("Details", "Details", "Post", new { id = item.PostId },null) 
                 @*@Html.ActionLink("Delete", "Delete", new { id = item.PostId })*@
             </td>
         </tr>
