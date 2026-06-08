@@ -6,17 +6,19 @@
 
 <h2>Get Blogs</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create","Staff")
-</p>
-
+@if (User.Identity.IsAuthenticated && User.IsInRole("Staff"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create", "Staff")
+    </p>
+}
 <br />
 <hr />
 @foreach (var item in ViewBag.Categories)
-            {
-                <b> @item.CategoryName |</b>
-            }
-<br />  
+{
+    <b> @item.CategoryName |</b>
+}
+<br />
 <hr />
 
 @using (Html.BeginForm("GetBlogs", "Home", FormMethod.Post))
@@ -86,7 +88,7 @@
             </td>
             <td>
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.PostId }) |*@
-                @Html.ActionLink("Details", "Details", "Post", new { id = item.PostId },null) 
+                @Html.ActionLink("Details", "Details", "Post", new { id = item.PostId }, null)
                 @*@Html.ActionLink("Delete", "Delete", new { id = item.PostId })*@
             </td>
         </tr>

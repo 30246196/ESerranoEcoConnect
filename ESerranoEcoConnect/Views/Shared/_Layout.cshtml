@@ -45,15 +45,25 @@
                             <li> @Html.ActionLink("Moderate Categories,Posts and Users", "Index", "Moderator", new { area = "" }, new { @class = "nav-link" }) </li>
 
                         }
-                    }
-                            <!--
-                {
-                    < li > @Html.ActionLink("My Profile", "Profile", "Account", new { area = "" }, new { @class = "nav-link" }) </ li >
 
-                }
-            -->
-                        
-                    </ul>
+                        <!-- Stage 9 : Members can see their own comments.Prevent non users registered/ non logged in users of creating a Post/-->
+                        if (User.IsInRole("Member"))
+                        {
+                            <li> @Html.ActionLink("My Comments", "Index", "Comment", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li> @Html.ActionLink("Create a Comment", "CreateComment", "Comment", new { area = "" }, new { @class = "nav-link" })</li>
+
+                        }
+
+
+                    }
+                    <!--
+        {
+            < li > @Html.ActionLink("My Profile", "Profile", "Account", new { area = "" }, new { @class = "nav-link" }) </ li >
+
+        }
+    -->
+
+                </ul>
                  @Html.Partial("_LoginPartial")
             </div>
         </div>

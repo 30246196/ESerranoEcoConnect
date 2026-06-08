@@ -300,6 +300,10 @@
     <Content Include="Views\Moderator\ViewAllComments.cshtml" />
     <Content Include="Views\Moderator\DeleteComment.cshtml" />
     <Content Include="Views\Comment\CreateComment.cshtml" />
+    <Content Include="Views\Comment\Index.cshtml" />
+    <Content Include="Views\Comment\EditMyComment.cshtml" />
+    <Content Include="Views\Comment\DeleteMyComment.cshtml" />
+    <Content Include="Views\Comment\DeleteMyCommentConfirmed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

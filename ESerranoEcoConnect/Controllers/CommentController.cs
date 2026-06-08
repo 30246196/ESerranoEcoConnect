@@ -21,7 +21,7 @@ namespace ESerranoEcoConnect.Controllers
         //access to database context
         private EcoConnectDbContext db = new EcoConnectDbContext();
 
-        // method IsUserSuspended to check if the user is suspended
+        // method IsUserSuspended to check if the user is suspended, although suspended members are not allowed to log in.
         private bool IsUserSuspended()
         {
             var userId = User.Identity.GetUserId();
@@ -29,10 +29,23 @@ namespace ESerranoEcoConnect.Controllers
             return member != null && member.IsSuspended;
         }
 
+        // SHOW COMMENTS FROM THE LOGGED-IN MEMBER
+        // Stage 9: Task: the system allow Members to edit their own comments
+        [Authorize(Roles = "Member")] // added Stage 9;
         // GET: Comment
         public ActionResult Index()
         {
-            return View();
+            // select the comments from the logged-in member
+            string memberId = User.Identity.GetUserId();
+
+            //Get all comments from the logged-in member
+            var comments = db.Comments
+                .Include(c => c.Post.Category)
+                .Where(c => c.AuthorId == memberId)// filter by the logged-in user
+                .OrderByDescending(c => c.CreatedAt)
+                .ToList();
+
+            return View(comments.ToList());
         }        
 
         // GET: Comment/Details/5
@@ -90,48 +103,146 @@ namespace ESerranoEcoConnect.Controllers
             }
         }
 
-        // GET: Comment/Edit/5
-        public ActionResult Edit(int id)
+        // Stage 9: A member can edit their own comment
+        // GET: Comment/EditMyComment
+        public ActionResult EditMyComment(int? id)// create a nullable int parameter for the comment id
         {
-            return View();
-        }
+            if(id==null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            // find a comment in the Comments table with the given id,include the author
+            Comment myComment = db.Comments.Find(id);
 
-        // POST: Comment/Edit/5
+            // if comment does not exist, return 404 error
+            if (myComment == null)
+            { 
+                return HttpNotFound();
+            }
+
+            // get a list of all the attributes to edit in a comment, as Content
+
+            return View(myComment);
+        }
+        // POST: comment/EditMyComment
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Member")]
+        public ActionResult EditMyComment(int id, Comment updatedComment)
         {
-            try
+            // Prevent suspended users from editing comments
+            if (IsUserSuspended())
             {
-                // TODO: Add update logic here
+                return new HttpStatusCodeResult(403, "Your account is suspended. You cannot edit comments.");
+            }
 
-                return RedirectToAction("Details", "Post", new {id =id});
-            }
-            catch
+            // Retrieve the existing comment from the database
+            var existingComment = db.Comments.Find(id);
+
+            if (existingComment == null)
             {
-                return RedirectToAction("Details", "Post", new { id = id });
+                return HttpNotFound();
             }
+
+            // Ensure the logged‑in member is the author of the comment
+            var currentUserId = User.Identity.GetUserId();
+            if (existingComment.AuthorId != currentUserId)
+            {
+                return new HttpStatusCodeResult(403, "You are not authorised to edit this comment.");
+            }
+
+            // Validate the new content
+            if (string.IsNullOrWhiteSpace(updatedComment.Content))
+            {
+                ModelState.AddModelError("Content", "Comment cannot be empty.");
+                return View(existingComment); // Return the original model so the user can correct it
+            }
+
+            // Apply the update
+            existingComment.Content = updatedComment.Content;
+            existingComment.UpdatedAt = DateTime.Now;
+
+            db.SaveChanges();
+
+            // Redirect back to the post the comment belongs to
+            return RedirectToAction("Details", "Post", new { id = existingComment.PostId });
         }
 
-        // GET: Comment/Delete/5
-        public ActionResult Delete(int id)
+
+        // GET: Comment/DeleteMyComment/5
+        [Authorize(Roles = "Member")]
+        public ActionResult DeleteMyComment(int? id)
         {
-            return RedirectToAction("Details", "Post", new { id = id });
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+
+            // Retrieve the comment
+            var comment = db.Comments.Find(id);
+
+            if (comment == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Check ownership
+            var currentUserId = User.Identity.GetUserId();
+            if (comment.AuthorId != currentUserId)
+            {
+                return new HttpStatusCodeResult(403, "You are not authorised to delete this comment.");
+            }
+
+            // Check suspension
+            if (IsUserSuspended())
+            {
+                return new HttpStatusCodeResult(403, "Your account is suspended. You cannot delete comments.");
+            }
+
+            return View(comment);
         }
 
-        // POST: Comment/Delete/5
+
+        // POST: Comment/DeleteMyComment/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Member")]
+        public ActionResult DeleteMyCommentConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            // Retrieve the comment
+            var comment = db.Comments.Find(id);
 
-                return RedirectToAction("Details", "Post", new { id = id });
-            }
-            catch
+            if (comment == null)
             {
-                return RedirectToAction("Details", "Post", new { id = id });
+                return HttpNotFound();
             }
+
+            // Check ownership
+            var currentUserId = User.Identity.GetUserId();
+            if (comment.AuthorId != currentUserId)
+            {
+                return new HttpStatusCodeResult(403, "You are not authorised to delete this comment.");
+            }
+
+            // Check suspension
+            if (IsUserSuspended())
+            {
+                return new HttpStatusCodeResult(403, "Your account is suspended. You cannot delete comments.");
+            }
+
+            // Store PostId for redirect
+            int postId = comment.PostId;
+
+            // Delete the comment
+            db.Comments.Remove(comment);
+            db.SaveChanges();
+
+            // Add success message
+            TempData["SuccessMessage"] = "Your comment has been deleted successfully.";
+
+            // Redirect back to the post
+            return RedirectToAction("Index", "Comment");
         }
+
     }
 }
