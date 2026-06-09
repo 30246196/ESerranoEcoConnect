@@ -1,20 +1,101 @@
 ﻿/* Set padding to keep content from hitting the edges */
-.body-content {
+/*.body-content {
     margin-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
-}
+}*/
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
-.dl-horizontal dt {
+/*.dl-horizontal dt {
     white-space: normal;
-}
+}*/
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
+}*/
+
+
+/* ----------------------------------------------------------
+   ECOCONNECT – Carousel Background
+   Soft green ecological gradient behind the carousel section.
+   Adds visual identity and separates the carousel from the page.
+----------------------------------------------------------- */
+.eco-carousel-bg {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9, #a5d6a7);
+    padding: 40px 0;
+    border-radius: 20px;
 }
+
+/* ----------------------------------------------------------
+   Carousel Cards
+   - Fixed height to prevent layout shifting between slides
+   - Large rounded corners for a modern, friendly look
+   - Soft green shadow to reinforce the ecological theme
+----------------------------------------------------------- */
+.eco-card {
+    max-width: 650px;
+    height: 420px; /* Fixed height */
+    border-radius: 25px; /* Large rounded corners */
+    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.25); /* Soft green shadow */
+    overflow: hidden;
+}
+
+    /* ----------------------------------------------------------
+   Card Content Spacing
+   Ensures consistent spacing inside cards and avoids jumping
+   when switching between slides.
+----------------------------------------------------------- */
+    .eco-card p,
+    .eco-card ul {
+        margin-bottom: 1rem;
+    }
+
+/* ----------------------------------------------------------
+   Carousel Indicators (Dots)
+   Custom green colours to match the EcoConnect theme.
+----------------------------------------------------------- */
+.carousel-indicators button {
+    background-color: #2e7d32; /* Medium green */
+}
+
+.carousel-indicators .active {
+    background-color: #1b5e20; /* Darker green for active state */
+}
+
+/* ============================================================
+   ECOCONNECT BUTTON THEME
+   Aplica a todos los botones del sitio
+   ============================================================ */
+
+/* Botón principal (antes .btn-primary azul) */
+.btn-primary {
+    background-color: #4CAF50 !important;
+    border-color: #4CAF50 !important;
+    color: white !important;
+}
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: #2E4630 !important;
+        border-color: #2E4630 !important;
+        color: white !important;
+    }
+
+/* Botones outline (antes .btn-outline-dark negro) */
+.btn-outline-dark {
+    color: #4CAF50 !important;
+    border-color: #4CAF50 !important;
+}
+
+    .btn-outline-dark:hover,
+    .btn-outline-dark:focus {
+        background-color: #4CAF50 !important;
+        color: white !important;
+        border-color: #4CAF50 !important;
+    }
+

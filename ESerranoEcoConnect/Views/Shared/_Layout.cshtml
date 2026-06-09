@@ -6,69 +6,77 @@
     <title>@ViewBag.Title - EcoConnect</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <!-- added for applying the style in Site.css-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
 
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            @Html.ActionLink("EcoConnect", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Blogs", "GetBlogs", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+    @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">*@
+    <nav class="navbar navbar-expand-sm navbar-light" style="background-color:#e8f5e9;">
 
-                    @if (Request.IsAuthenticated)
+            <div class="container">
+                @Html.ActionLink("EcoConnect", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Blogs", "GetBlogs", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <!-- added in stage 12: Events in menu open to all users, even not logged in ones-->
+                        <li>@Html.ActionLink("Events", "Index", "Event", new { area = "" }, new { @class = "nav-link" })</li>
+
+
+                        @if (Request.IsAuthenticated)
+                        {
+                            <!-- Stage 3 Task 2.12 Add a navigation link visible only to Admin role users. -->
+                            if (User.IsInRole("Admin"))
+                            {
+                                <li>@Html.ActionLink("Admin Dashboard", "Index", "Admin")</li>
+
+                            }
+
+                            <!--  Stage 6 Create a Staff Dashboard to deal with posts -->
+                            if (User.IsInRole("Staff"))
+                            {
+                                <li> @Html.ActionLink("My Posts", "Index", "Staff", new { area = "" }, new { @class = "nav-link" }) </li>
+                                <li> @Html.ActionLink("Create a Post", "Create", "Staff", new { area = "" }, new { @class = "nav-link" }) </li>
+                            }
+
+                            <!--  Stage 8: task 1: Add  the Modderator link visible only for Moderator users-->
+
+                            if (User.IsInRole("Moderator"))
+                            {
+                                <li> @Html.ActionLink("Moderate Categories,Posts and Users", "Index", "Moderator", new { area = "" }, new { @class = "nav-link" }) </li>
+
+                            }
+
+                            <!-- Stage 9 : Members can see their own comments.Prevent non users registered/ non logged in users of creating a Post/-->
+                            if (User.IsInRole("Member"))
+                            {
+                                <li> @Html.ActionLink("My Comments", "Index", "Comment", new { area = "" }, new { @class = "nav-link" })</li>
+                                <li> @Html.ActionLink("Create a Comment", "CreateComment", "Comment", new { area = "" }, new { @class = "nav-link" })</li>
+
+                            }
+
+
+                        }
+                        <!--
                     {
-                        <!-- Stage 3 Task 2.12 Add a navigation link visible only to Admin role users. -->
-                        if (User.IsInRole("Admin"))
-                        {
-                            <li>@Html.ActionLink("Admin Dashboard", "Index", "Admin")</li>
-
-                        }
-
-                        <!--  Stage 6 Create a Staff Dashboard to deal with posts -->
-                        if (User.IsInRole("Staff"))
-                        {
-                            <li> @Html.ActionLink("My Posts", "Index", "Staff", new { area = "" }, new { @class = "nav-link" }) </li>
-                            <li> @Html.ActionLink("Create a Post", "Create", "Staff", new { area = "" }, new { @class = "nav-link" }) </li>
-                        }
-
-                        <!--  Stage 8: task 1: Add  the Modderator link visible only for Moderator users-->
-
-                        if (User.IsInRole("Moderator"))
-                        {
-                            <li> @Html.ActionLink("Moderate Categories,Posts and Users", "Index", "Moderator", new { area = "" }, new { @class = "nav-link" }) </li>
-
-                        }
-
-                        <!-- Stage 9 : Members can see their own comments.Prevent non users registered/ non logged in users of creating a Post/-->
-                        if (User.IsInRole("Member"))
-                        {
-                            <li> @Html.ActionLink("My Comments", "Index", "Comment", new { area = "" }, new { @class = "nav-link" })</li>
-                            <li> @Html.ActionLink("Create a Comment", "CreateComment", "Comment", new { area = "" }, new { @class = "nav-link" })</li>
-
-                        }
-
+                        < li > @Html.ActionLink("My Profile", "Profile", "Account", new { area = "" }, new { @class = "nav-link" }) </ li >
 
                     }
-                    <!--
-        {
-            < li > @Html.ActionLink("My Profile", "Profile", "Account", new { area = "" }, new { @class = "nav-link" }) </ li >
+                -->
 
-        }
-    -->
-
-                </ul>
-                 @Html.Partial("_LoginPartial")
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />

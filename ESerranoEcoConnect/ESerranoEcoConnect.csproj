@@ -172,6 +172,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\ContactFormController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ModeratorController.cs" />
@@ -185,6 +186,7 @@
     <Compile Include="Models\ContactForm.cs" />
     <Compile Include="Models\DatabaseInitialiser.cs" />
     <Compile Include="Models\EcoConnectDbContext.cs" />
+    <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Member.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Staff.cs" />
@@ -309,6 +311,7 @@
     <Content Include="Views\Comment\DeleteMyCommentConfirmed.cshtml" />
     <Content Include="Views\ContactForm\Index.cshtml" />
     <Content Include="Views\ContactForm\Details.cshtml" />
+    <Content Include="Views\Event\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

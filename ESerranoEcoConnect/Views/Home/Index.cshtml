@@ -6,50 +6,132 @@
     <section class="row" aria-labelledby="EcoconnectTitle">
         <h1 id="title">ECOCONNECT</h1>
         <p class="lead"> EcoConnect is a community‑focused environmental organisation dedicated to promoting sustainable living and positive environmental action. We bring people together to learn, share ideas, and take part in activities that help protect and improve our local environment.</p>
-        <p><a href="https://www.wwf.org.uk" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
+        <p><a href="@Url.Action("GetBlogs", "Home")" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
     </section>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="whatwedoTitle">
-            <h2 id="whatWeDoTitle">What We Do</h2>
-            <p>
-                At EcoConnect, we organise and promote a range of sustainability‑focused initiatives, including:
-            </p>
-            <p>
-            <ul>
-                <li>Community clean‑up events to improve local spaces</li>
-                <li>Sustainability workshops to share practical skills and knowledge</li>
-                <li>Environmental talks led by passionate speakers</li>
-                <li>Eco‑markets supporting ethical and local businesses</li>
-            </ul>
-                Our events are designed to be inclusive, engaging, and impactful—helping individuals make a real difference in their communities!
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://foe.scot">Learn more &raquo;</a></p>
-        </section>
+    <!-- ============================================================
+      ECOCONNECT – Carousel Section
+      This block replaces the four static sections with a modern,
+      animated carousel featuring fade transitions, ecological icons,
+      and a green gradient background.
+    ============================================================ -->
+    <div class="eco-carousel-bg">
 
-        <section class="col-md-4" aria-labelledby="getinvolvedTitle">
-            <h2 id="getInvolvedTitle">Get Involved</h2>
+        <!-- Bootstrap Carousel Wrapper -->
+        <div id="ecoCarousel" class="carousel slide carousel-fade"
+             data-bs-ride="carousel" data-bs-interval="6000">
 
-            <p>
-                <ul>
-                    <li>Stay up to date with the latest events and announcements</li>
-                    <li>  Read and share sustainability news</li>
-                    <li>Take part in community discussions</li>
-                    <li>Comment on posts and exchange ideas with other members</li>
-                </ul>
-                    By registering an account, you can actively participate, share feedback, and become part of a growing environmental network.
-            </p>
-                    <p><a class="btn btn-outline-dark" href="https://www.greenpeace.org.uk/">Get Involved &raquo;</a></p>
-            
-           
-</section>
-        <section class="col-md-4" aria-labelledby="joinTitle">
-            <h2 id="joinTitle">Join the Community</h2>
-            <p>
-                Whether you’re passionate about environmental action or just starting your sustainability journey, EcoConnect welcomes you.
-                Register today, get involved, and help us work towards a greener, healthier future—together.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://earthwatch.org/">Join us &raquo;</a></p>
-        </section>
+            <!-- --------------------------------------------------------
+                 Carousel Indicators (dots)
+                 Allow users to jump directly to any slide.
+            --------------------------------------------------------- -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#ecoCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#ecoCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#ecoCarousel" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#ecoCarousel" data-bs-slide-to="3"></button>
+            </div>
+
+            <!-- --------------------------------------------------------
+                 Carousel Inner – Contains all slides
+            --------------------------------------------------------- -->
+            <div class="carousel-inner">
+
+                <!-- =====================================================
+                     SLIDE 1 – What We Do
+                     Includes ecological icon + card with fixed height.
+                ====================================================== -->
+                <div class="carousel-item active">
+                    <div class="card eco-card p-4 mx-auto">
+                        <h2><i class="bi bi-tree-fill text-success me-2"></i>What We Do</h2>
+
+                        <p>At EcoConnect, we organise and promote a range of sustainability‑focused initiatives, including:</p>
+
+                        <ul>
+                            <li>Community clean‑up events to improve local spaces</li>
+                            <li>Sustainability workshops to share practical skills and knowledge</li>
+                            <li>Environmental talks led by passionate speakers</li>
+                            <li>Eco‑markets supporting ethical and local businesses</li>
+                        </ul>
+
+                        <p>Our events are designed to be inclusive, engaging, and impactful—helping individuals make a real difference in their communities!</p>
+
+                        <a class="btn btn-outline-dark" href="@Url.Action("Index", "Event")">Learn more &raquo;</a>
+                    </div>
+                </div>
+
+                <!-- =====================================================
+                     SLIDE 2 – Get Involved
+                ====================================================== -->
+                <div class="carousel-item">
+                    <div class="card eco-card p-4 mx-auto">
+                        <h2><i class="bi bi-people-fill text-success me-2"></i>Get Involved</h2>
+
+                        <p>By joining EcoConnect, you can:</p>
+
+                        <ul>
+                            <li>Stay up to date with the latest events and announcements</li>
+                            <li>Read and share sustainability news</li>
+                            <li>Take part in community discussions</li>
+                            <li>Comment on posts and exchange ideas with other members</li>
+                        </ul>
+
+                        <p>By registering an account, you can actively participate, share feedback, and become part of a growing environmental network.</p>
+
+                        <a class="btn btn-outline-dark" href="@Url.Action("Login", "Account")">Get Involved &raquo;</a>
+                    </div>
+                </div>
+
+                <!-- =====================================================
+                     SLIDE 3 – Join the Community
+                ====================================================== -->
+                <div class="carousel-item">
+                    <div class="card eco-card p-4 mx-auto">
+                        <h2><i class="bi bi-globe-europe-africa text-success me-2"></i>Join the Community</h2>
+
+                        <p>
+                            Whether you’re passionate about environmental action or just starting your sustainability journey,
+                            EcoConnect welcomes you. Register today, get involved, and help us work towards a greener, healthier future—together.
+                        </p>
+
+                        <a class="btn btn-outline-dark" href="@Url.Action("Register","Account")">Join us &raquo;</a>
+                    </div>
+                </div>
+
+                <!-- =====================================================
+                     SLIDE 4 – Contact Us
+                ====================================================== -->
+                <div class="carousel-item">
+                    <div class="card eco-card p-4 mx-auto">
+                        <h2><i class="bi bi-envelope-heart-fill text-success me-2"></i>Contact Us</h2>
+
+                        <p>
+                            Have a question, suggestion, or idea to help strengthen our community?
+                            We’d love to hear from you. Whether you want to share feedback, ask about upcoming events,
+                            or simply reach out, our team is here to listen and support you.
+                        </p>
+
+                        <p>Your message helps us grow, improve, and continue building a greener future together.</p>
+
+                        <a class="btn btn-outline-dark" href="@Url.Action("Contact", "Home")">Send us a message &raquo;</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- --------------------------------------------------------
+                 Carousel Controls (arrows)
+                 Allow users to navigate manually.
+            --------------------------------------------------------- -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#ecoCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#ecoCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+
+        </div>
     </div>
+
 </main>

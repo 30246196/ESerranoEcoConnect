@@ -19,7 +19,8 @@ namespace ESerranoEcoConnect.Models
         public DbSet<Member> Members { get; set; }
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<ContactForm> ContactForms { get; set; }// added in Stage 11: Contact Form
-
+        //added in Stage 12: Add Client-side Events
+        public DbSet<Event> Events { get; set; }
         public EcoConnectDbContext()
             : base("EcoConnectConnectionV2", throwIfV1Schema: false)//changed first in <connectionStrings>... name=Defaultconnection to name= EcoConnectConnection in Web.config
         {

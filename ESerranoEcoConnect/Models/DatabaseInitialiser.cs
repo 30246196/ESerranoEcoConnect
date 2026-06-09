@@ -256,6 +256,38 @@ namespace ESerranoEcoConnect.Models
                 context.SaveChanges();
             }
 
+            // -------------------------------------------------------
+            // 8. EVENTS (Stage 12)
+            // -------------------------------------------------------
+            if (!context.Events.Any())
+            {
+                context.Events.AddRange(new List<Event>
+                {
+                    new Event
+                    {
+                        Title = "Community Clean-Up Day",
+                        Description = "Join us to clean the local park and surrounding area.",
+                        EventDate = DateTime.Now.AddDays(7),
+                        CreatedAt = DateTime.Now
+                    },
+                    new Event
+                    {
+                        Title = "Recycling Workshop",
+                        Description = "Learn how to recycle effectively and reduce waste.",
+                        EventDate = DateTime.Now.AddDays(14),
+                        CreatedAt = DateTime.Now
+                    },
+                    new Event
+                    {
+                        Title = "Eco-Friendly Gardening",
+                        Description = "Tips and techniques for sustainable gardening.",
+                        EventDate = DateTime.Now.AddDays(21),
+                        CreatedAt = DateTime.Now
+                    }
+                });
+
+                context.SaveChanges();
+            }
 
         }
 
