@@ -1,15 +1,46 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Contact Us";
 }
 <main aria-labelledby="EcoConnect">
-    <h2 id="title">@ViewBag.Title.</h2>
+    <h2 id="title">@ViewBag.Title</h2>
     <h3>@ViewBag.Message</h3>
+
+    @{
+        ViewBag.Title = "Contact Us";
+    }
+
+    
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <p>If you have any questions, feedback, or issues, feel free to send us a message using the form below.</p>
+
+    <hr />
+
+    @using (Html.BeginForm("Contact", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" class="form-control" rows="5"></textarea>
+            @Html.ValidationMessage("Message", "", new { @class = "text-danger" })
+        </div>
+
+        <button type="submit" class="btn btn-primary">Send Message</button>
+    }
+
 
     <address>
         1 Wood Way<br />
         Woodland, WO1 1AB<br />
         <abbr title="Phone">P:</abbr>
-       +44 0123 456 7890
+        +44 0123 456 7890
     </address>
 
     <address>

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ESerranoEcoConnect.Models.ViewModels.ContactFormViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<!-- Displays a list of all contact messages.
+     Each entry shows the sender's name, a short preview of the message,
+     and a link to view the full details. -->
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserDisplayName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Message)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SentAt)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserDisplayName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SentAt)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ContactFormId })
+            </td>
+        </tr>
+    }
+
+</table>

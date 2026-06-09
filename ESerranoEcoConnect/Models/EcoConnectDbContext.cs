@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.Identity.EntityFramework;
-
+using ESerranoEcoConnect.Models;//added
 using System.Data.Entity;// added for the Database.SetInitializer() method
 
 namespace ESerranoEcoConnect.Models
@@ -18,6 +18,7 @@ namespace ESerranoEcoConnect.Models
         public DbSet<Comment> Comments { get; set; }        
         public DbSet<Member> Members { get; set; }
         public DbSet<Staff> Staffs { get; set; }
+        public DbSet<ContactForm> ContactForms { get; set; }// added in Stage 11: Contact Form
 
         public EcoConnectDbContext()
             : base("EcoConnectConnectionV2", throwIfV1Schema: false)//changed first in <connectionStrings>... name=Defaultconnection to name= EcoConnectConnection in Web.config

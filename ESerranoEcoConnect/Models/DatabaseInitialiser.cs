@@ -219,7 +219,46 @@ namespace ESerranoEcoConnect.Models
             context.Comments.Add(comment2);
 
             context.SaveChanges();
+
+            // ------------------------------------------------------------
+            // 7. CONTACTFORMS (Stage 11)
+            // ------------------------------------------------------
+            if (!context.ContactForms.Any())
+                        {
+                            context.ContactForms.AddRange(new List<ContactForm>
+                {
+                    new ContactForm
+                    {
+                        Message = "Hello, I would like more information about EcoConnect.",
+                        SentAt = DateTime.Now.AddDays(-5),
+                        UserId = null // Anonymous user
+                    },
+                    new ContactForm
+                    {
+                        Message = "I found a bug on the blog page. Could you please check it?",
+                        SentAt = DateTime.Now.AddDays(-3),
+                        UserId = member1.Id // Registered Member
+                    },
+                    new ContactForm
+                    {
+                        Message = "Great platform! I love the sustainability content.",
+                        SentAt = DateTime.Now.AddDays(-2),
+                        UserId = member2.Id // Registered Member
+                    },
+                    new ContactForm
+                    {
+                        Message = "I need help resetting my password.",
+                        SentAt = DateTime.Now.AddDays(-1),
+                        UserId = null // Anonymous user
+                    }
+                });
+
+                context.SaveChanges();
+            }
+
+
         }
+
     }
 }
 

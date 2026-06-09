@@ -1,4 +1,5 @@
 ﻿using ESerranoEcoConnect.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity; // Add this using directive
@@ -24,15 +25,56 @@ namespace ESerranoEcoConnect.Controllers
             return View();
         }
 
+        // Stage 11: Add a Contact Form
+
+        //GET: Contact
         public ActionResult Contact()
         {
-            ViewBag.Message = "Contact us";
-
             return View();
         }
 
+        // POST: Contact
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Contact(string message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                ModelState.AddModelError("Message", "Message cannot be empty.");
+                return View();
+            }
+
+            var contact = new ContactForm
+            {
+                Message = message,
+                SentAt = DateTime.Now,
+                UserId = User.Identity.IsAuthenticated ? User.Identity.GetUserId() : null
+            };
+
+            context.ContactForms.Add(contact);
+            context.SaveChanges();
+
+            TempData["SuccessMessage"] = "Your message has been sent successfully.";
+
+            return RedirectToAction("Contact");
+        }
+
+        // ADMIN INBOX
+        [Authorize(Roles = "Admin,Moderator")]
+        public ActionResult ContactInbox()
+        {
+            var messages = context.ContactForms
+                .OrderByDescending(c => c.SentAt)
+                .ToList();
+
+            return View(messages);
+        }
         
-        public ActionResult GetBlogs()
+    
+
+
+
+    public ActionResult GetBlogs()
         {
             // Get all posts, include category and staff author
             var posts = context.Posts        
@@ -46,26 +88,7 @@ namespace ESerranoEcoConnect.Controllers
 
             return View("Getblogs",posts);
         }
-
-        //public ActionResult Details(int id)
-        //{
-        //    var post = context.Posts
-        //        .Include("Category")
-        //        .Include("Staff")
-        //        .FirstOrDefault(p => p.PostId == id);
-
-        //    if (post == null)
-        //        return HttpNotFound();
-
-        //    // Load comments
-        //    post.Comments = context.Comments
-        //        .Include("Author")
-        //        .Where(c => c.PostId == id)
-        //        .OrderByDescending(c => c.CreatedAt)
-        //        .ToList();
-
-        //    return View(post);
-        //}
+      
 
         [HttpPost]
         public ActionResult GetBlogs(string SearchString)
@@ -88,8 +111,7 @@ namespace ESerranoEcoConnect.Controllers
             ViewBag.Categories = context.Categories.ToList();
 
             return View("GetBlogs",posts);
-        }
-
+        }        
 
     }
 }

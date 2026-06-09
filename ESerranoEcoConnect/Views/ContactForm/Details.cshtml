@@ -1,0 +1,46 @@
+﻿@model ESerranoEcoConnect.Models.ViewModels.ContactFormViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>
+    Message Details
+</h2>
+<!-- Shows the full content of a single contact message.
+     This page is read‑only and intended for administrative review. -->
+
+
+<div>
+    <h4>Contact Form</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserDisplayName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserDisplayName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Message)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Message)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SentAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SentAt)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
