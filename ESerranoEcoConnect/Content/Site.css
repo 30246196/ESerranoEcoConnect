@@ -1,78 +1,170 @@
-﻿/* Set padding to keep content from hitting the edges */
-/*.body-content {
-    margin-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
-}*/
-
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-/*.dl-horizontal dt {
-    white-space: normal;
-}*/
-
-/* Set width on the form input elements since they're 100% wide by default */
-/*input,
-select,
-textarea {
-    max-width: 280px;
-}*/
+﻿/* ----------------------------------------------------------
+   Navigation Bar Typography
+   Larger, semi‑bold text for improved readability.
+----------------------------------------------------------- */
+.navbar-nav .nav-link {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
 
 
 /* ----------------------------------------------------------
-   ECOCONNECT – Carousel Background
-   Soft green ecological gradient behind the carousel section.
-   Adds visual identity and separates the carousel from the page.
+   Global Headings
+   Stronger presence for section titles.
+----------------------------------------------------------- */
+h1, h2, h3 {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+
+/* ----------------------------------------------------------
+   Body Background
+   Soft ecological gradient + fixed leaf texture.
+----------------------------------------------------------- */
+body {
+    background: linear-gradient(rgba(232, 245, 233, 0.92), rgba(200, 230, 201, 0.92)), url('/Content/Images/bright-green-leaves.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+
+/* ----------------------------------------------------------
+   Carousel Slide Typography
+   Clean, readable text inside slide cards.
+----------------------------------------------------------- */
+.carousel-item h2 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.carousel-item p,
+.carousel-item ul li {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+
+/* ----------------------------------------------------------
+   Carousel Caption (if used)
+----------------------------------------------------------- */
+.carousel-caption h5 {
+    font-size: 2.2rem;
+    font-weight: 600;
+}
+
+.carousel-caption p {
+    font-size: 1.3rem;
+}
+
+
+/* ----------------------------------------------------------
+   ECOCONNECT – Carousel Background Wrapper
+   Green gradient overlay + soft leaf texture.
 ----------------------------------------------------------- */
 .eco-carousel-bg {
-    background: linear-gradient(135deg, #e8f5e9, #c8e6c9, #a5d6a7);
+    background-image: linear-gradient(135deg, rgba(232,245,233,0.85), rgba(165,214,167,0.85)), url('/Content/Images/soft-greenleaves.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     padding: 40px 0;
     border-radius: 20px;
 }
 
+
 /* ----------------------------------------------------------
-   Carousel Cards
-   - Fixed height to prevent layout shifting between slides
-   - Large rounded corners for a modern, friendly look
-   - Soft green shadow to reinforce the ecological theme
+   Carousel Cards (Glass Effect)
 ----------------------------------------------------------- */
 .eco-card {
-    max-width: 650px;
-    height: 420px; /* Fixed height */
-    border-radius: 25px; /* Large rounded corners */
-    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.25); /* Soft green shadow */
-    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(6px);
 }
 
-    /* ----------------------------------------------------------
-   Card Content Spacing
-   Ensures consistent spacing inside cards and avoids jumping
-   when switching between slides.
------------------------------------------------------------ */
     .eco-card p,
     .eco-card ul {
         margin-bottom: 1rem;
     }
 
+
 /* ----------------------------------------------------------
    Carousel Indicators (Dots)
-   Custom green colours to match the EcoConnect theme.
 ----------------------------------------------------------- */
 .carousel-indicators button {
-    background-color: #2e7d32; /* Medium green */
+    background-color: #2e7d32;
 }
 
 .carousel-indicators .active {
-    background-color: #1b5e20; /* Darker green for active state */
+    background-color: #1b5e20;
 }
 
-/* ============================================================
-   ECOCONNECT BUTTON THEME
-   Aplica a todos los botones del sitio
-   ============================================================ */
 
-/* Botón principal (antes .btn-primary azul) */
+/* ----------------------------------------------------------
+   Carousel Slide Backgrounds
+   Each slide uses a different eco‑themed image.
+----------------------------------------------------------- */
+.slide1 {
+    background-image: url('/Content/Images/pots-on-a-wall.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.slide2 {
+    background-image: url('/Content/Images/hands-on-earth.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.slide3 {
+    background-image: url('/Content/Images/sea-green-sunset-people.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.slide4 {
+    background-image: url('/Content/Images/post.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+/* ----------------------------------------------------------
+   Carousel Item Layout
+----------------------------------------------------------- */
+.carousel-item {
+    height: 480px;
+    position: relative;
+}
+
+    .carousel-item .eco-card {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Soft overlay for readability */
+    .carousel-item::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.25);
+        z-index: 1;
+    }
+
+
+/* ----------------------------------------------------------
+   ECOCONNECT Button Theme
+----------------------------------------------------------- */
+.btn {
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+/* Primary button */
 .btn-primary {
     background-color: #4CAF50 !important;
     border-color: #4CAF50 !important;
@@ -86,7 +178,7 @@ textarea {
         color: white !important;
     }
 
-/* Botones outline (antes .btn-outline-dark negro) */
+/* Outline button */
 .btn-outline-dark {
     color: #4CAF50 !important;
     border-color: #4CAF50 !important;
@@ -98,4 +190,3 @@ textarea {
         color: white !important;
         border-color: #4CAF50 !important;
     }
-
