@@ -74,7 +74,7 @@
                         if (User.IsInRole("Member"))
                         {
                             <li>@Html.ActionLink("My Comments", "Index", "Comment", null, new { @class = "nav-link" })</li>
-                            <li>@Html.ActionLink("Create a Comment", "CreateComment", "Comment", null, new { @class = "nav-link" })</li>
+                            @*<li>@Html.ActionLink("Create a Comment", "CreateComment", "Comment", null, new { @class = "nav-link" })</li>*@
                         }
                     }
 
