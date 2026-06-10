@@ -271,6 +271,12 @@ namespace ESerranoEcoConnect.Controllers
         {
             //find post by id in Posts table in the db
             var post = db.Posts.Find(id);
+
+            //REMOVE COMMENTS FOR THAT POST 
+            //GET ALL THE COMMENTS FOR THIS POST AND REMOVE THEM FROM THE DATABASE           
+            List<Comment> commentsFromPost = db.Comments.Include(c => c.Post).Where(c => c.PostId == id).ToList();
+            db.Comments.RemoveRange(commentsFromPost);
+            db.SaveChanges();
             //remove the post from the Posts table in the db
             db.Posts.Remove(post);
             db.SaveChanges();
@@ -294,7 +300,7 @@ namespace ESerranoEcoConnect.Controllers
             }
 
             //populate dropdowns to avoid an error in the view when trying to edit the post
-            ViewBag.StaffId = new SelectList(db.Staffs.Select(s => new
+            ViewBag.StaffId = new SelectList(db.Users.Select(s => new
             {
                 Id = s.Id,
                 FullName = s.FirstName + " " + s.LastName
@@ -326,7 +332,7 @@ namespace ESerranoEcoConnect.Controllers
             // Repopulate dropdowns when returning the view
             //ViewBag.StaffId = new SelectList(db.Staffs, "StaffId", "StaffName", post.StaffId);
             ViewBag.StaffId = new SelectList(
-                db.Staffs.Select(s => new
+                db.Users.Select(s => new
                 {
                     Id = s.Id,
                     FullName = s.FirstName + " " + s.LastName

@@ -312,7 +312,7 @@ namespace ESerranoEcoConnect.Controllers
                 RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 
                 //making sure that there are no duplicates roles stored in the database
-                if (roleManager.RoleExists(model.RoleName))
+                if (!roleManager.RoleExists(model.RoleName))
                 {
                     //create and save the new Role in the database
                     roleManager.Create(new IdentityRole(model.RoleName));

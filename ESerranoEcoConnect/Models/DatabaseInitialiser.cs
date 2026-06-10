@@ -170,7 +170,7 @@ namespace ESerranoEcoConnect.Models
                 Content = "Discover practical tips to reduce your environmental impact.",
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                StaffId = admin.Id,
+                Staff = admin,
                 IsAnnouncement = false,
                 IsEventUpdate = false,
                 CategoryId = categories.First(c => c.CategoryName == "Sustainable Living").CategoryId
@@ -182,7 +182,7 @@ namespace ESerranoEcoConnect.Models
                 Content = "Explore the advantages of renewable energy sources.",
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                StaffId = staff.Id,
+                Staff = staff,
                 IsAnnouncement = false,
                 IsEventUpdate = false,
                 CategoryId = categories.First(c => c.CategoryName == "Renewable Energy").CategoryId
@@ -200,8 +200,8 @@ namespace ESerranoEcoConnect.Models
                 Content = "Great post! Very helpful.",
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                PostId = post1.PostId,
-                AuthorId = member1.Id,
+                Post = post1,
+                Author = member1,
                 IsFlagged = false
             };
 
@@ -210,8 +210,8 @@ namespace ESerranoEcoConnect.Models
                 Content = "Thanks for the tips!",
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                PostId = post2.PostId,
-                AuthorId = member2.Id,
+                Post = post2,
+                Author = member2,
                 IsFlagged = false
             };
 

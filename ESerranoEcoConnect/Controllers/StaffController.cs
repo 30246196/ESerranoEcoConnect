@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace ESerranoEcoConnect.Controllers
 {
@@ -185,6 +186,11 @@ namespace ESerranoEcoConnect.Controllers
         {
             //find post by id in Posts table
             Post post = db.Posts.Find(id);
+
+            //GET ALL THE COMMENTS FOR THIS POST AND REMOVE THEM FROM THE DATABASE           
+            List<Comment> commentsFromPost = db.Comments.Include(c => c.Post).Where(c => c.PostId == id).ToList();
+            db.Comments.RemoveRange(commentsFromPost);
+            db.SaveChanges();
 
             //remove post from Posts table
             db.Posts.Remove(post);

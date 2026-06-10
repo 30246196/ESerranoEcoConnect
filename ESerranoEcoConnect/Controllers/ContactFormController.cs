@@ -43,12 +43,12 @@ namespace ESerranoEcoConnect.Controllers
                 else
                 {
                     // Attempt to find the user in the Members table.
-                    var member = await _context.Members
-                        .FirstOrDefaultAsync(u => u.Id == m.UserId);
+                    var member = await _context.Users
+                        .FirstOrDefaultAsync(u => u.Id == m.UserId) as Member;
 
                     // If not found, attempt to find the user in the Staff table.
                     var staff = member == null
-                        ? await _context.Staffs.FirstOrDefaultAsync(u => u.Id == m.UserId)
+                        ? await _context.Users.FirstOrDefaultAsync(u => u.Id == m.UserId) as Staff
                         : null;
 
                     // Build the display name depending on the user type.
@@ -97,11 +97,11 @@ namespace ESerranoEcoConnect.Controllers
             }
             else
             {
-                var member = await _context.Members
-                    .FirstOrDefaultAsync(u => u.Id == message.UserId);
+                var member = await _context.Users
+                    .FirstOrDefaultAsync(u => u.Id == message.UserId) as Member;
 
                 var staff = member == null
-                    ? await _context.Staffs.FirstOrDefaultAsync(u => u.Id == message.UserId)
+                    ? await _context.Users.FirstOrDefaultAsync(u => u.Id == message.UserId) as Staff
                     : null;
 
                 if (member != null)
